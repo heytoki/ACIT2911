@@ -1,0 +1,2 @@
+# Specifies what files/folders we dont want to track with github
+__pycache__/
