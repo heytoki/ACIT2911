@@ -3,9 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <title>Home</title>
+    <title>Recipes</title>
 </head>
 <body>
-    <h1>Home</h1>
+    <h1>Find your Recipes</h1>
+    
+    <form class="search-form" action="/recipes" method="GET">
+        <input type="text" name="query" placeholder="Search recipes...">
+        <select name="filter">
+            <option value="">All</option>
+            <option value="vegan">Vegan</option>
+            <option value="dessert">Dessert</option>
+        </select>
+        <button type="submit">Search</button>
+    </form>
+
+    <a href="{{ url_for('create') }}" class="btn-create">Create Recipe</a>
+
 </body>
 </html>
