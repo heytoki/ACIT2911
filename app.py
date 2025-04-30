@@ -10,7 +10,6 @@ recipes = []
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///recipes.db"
 app.instance_path = Path("data").resolve()
 
-
 db.init_app(app)
 @app.route('/')
 def home():
