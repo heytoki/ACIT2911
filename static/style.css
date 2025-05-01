@@ -14,7 +14,6 @@ body {
     flex-wrap: nowrap;
 }
 
-
 .logo {
     font-weight: bold;
     padding: 3px;
@@ -22,6 +21,13 @@ body {
     height: 30px;
     width: 30px;
     font-size: 1.5rem;
+}
+
+#title {
+    display: flex;
+    align-items: center;
+    font-size: 25px;
+    font-weight: bold;
 }
 
 #center {
@@ -45,7 +51,6 @@ input:focus {
 
 .search-form {
     font-size: 10px;
-    border-radius: 1px;
     border: none;
     padding: 15px;
     display: flex;
@@ -61,28 +66,35 @@ input:focus {
     font-size: 1rem;
 }
 
-.search-form button[type="submit"] {
+.search-form input[type="number"] {
+    font-size: 1rem;
+    border-radius: 0px;
+    border: 1px solid gray;
+}
+
+.search-form input[type="number"]:hover {
+    border: 1px solid #26A0DA;
+}
+
+.search-form button {
     background-color: #fff;
     border: 1px solid gray;
     padding: 6px 12px;
 }
 
-.search-form select[name="filter"] {
-    padding: 6px;
-}
-
 .search-form button:hover {
     background-color: #f0f0f0;
     border: 1px solid #26A0DA;
-} 
-
-button {
-    transition: background-color 50ms;
-    background-color: white;
 }
 
-button:hover {
-    background-color: #EEEEEE;
+.search-form select {
+    padding: 6px;
+    background-color: white;
+    border: 1px solid gray
+}
+
+.search-form select:hover {
+    border: 1px solid #26A0DA;
 }
 
 .nav-links {
