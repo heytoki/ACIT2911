@@ -70,6 +70,7 @@ input:focus {
     font-size: 1rem;
     border-radius: 0px;
     border: 1px solid gray;
+    height: 22px;
 }
 
 .search-form input[type="number"]:hover {
@@ -116,4 +117,12 @@ input:focus {
 
 .nav-links a:hover {
     background-color: #6666AB;
+}
+
+#ingredientsForm li{
+    list-style-type: none;
+}
+
+#createPage {
+    justify-content: center;
 }
