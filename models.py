@@ -1,18 +1,9 @@
 # models.py
-from sqlalchemy.orm import DeclarativeBase, mapped_column
-from sqlalchemy import Integer, String, Text
+from db import db
 
-class Base(DeclarativeBase):
-    pass
-
-class Recipe(Base):
-    __tablename__ = "recipes"
-
-    id = mapped_column(Integer, primary_key=True)
-    title = mapped_column(String, nullable=False)
-    ingredients = mapped_column(Text, nullable=False)
-    instructions = mapped_column(Text)
-    category = mapped_column(String)
-
-    def __repr__(self):
-        return f"<Recipe {self.title}>"
+class Recipe(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    ingredients = db.Column(db.Text, nullable=False)
+    instructions = db.Column(db.Text)
+    category = db.Column(db.String(50))
