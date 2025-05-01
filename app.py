@@ -61,7 +61,7 @@ def save_instructions_to_json(recipe_id, instructions_text):
         with open(instructions_file, 'r') as f:
             try:
                 data = json.load(f)
-            except json.JSONDecodeError:
+            except ValueError:
                 data = {}
     else:
         data = {}
