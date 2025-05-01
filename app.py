@@ -19,7 +19,8 @@ def home():
 
 @app.route('/recipes')
 def list():
-    return render_template('list.html')
+    recipes = Recipe.query.all()
+    return render_template('list.html', recipes = recipes)
 
 @app.route('/recipes/create', methods=['GET', 'POST'])
 def create():

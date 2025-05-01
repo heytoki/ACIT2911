@@ -9,7 +9,10 @@
     <h1>Create a New Recipe</h1>
     <form action="/recipes/create" method="POST">
         <input type="text" name="title" placeholder="Recipe Name" required><br><br>
-        <textarea name="ingredients" placeholder="Enter ingredients here..." rows="6" cols="40"></textarea><br><br>
+
+        <textarea name="ingredients" placeholder="Enter ingredients here..." rows="6" cols="40" required></textarea><br><br>
+
+        <textarea name="instructions" placeholder="Enter instructions (optional)..." rows="6" cols="40"></textarea><br><br>
 
         <button type="submit">Save</button>
         <button type="button">Download</button>

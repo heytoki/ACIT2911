@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Recipes</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
     <h1>Find your Recipes</h1>
-    
+
     <form class="search-form" action="/recipes" method="GET">
         <input type="text" name="query" placeholder="Search recipes...">
         <select name="filter">
@@ -18,7 +18,6 @@
         <button type="submit">Search</button>
     </form>
 
-    <a href="{{ url_for('create') }}" class="btn-create">Create Recipe</a>
-
+    <a href="/recipes/create" class="btn-create">Create Recipe</a>
 </body>
 </html>
