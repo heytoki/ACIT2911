@@ -8,16 +8,23 @@
 <body>
     <h1>Find your Recipes</h1>
 
-    <form class="search-form" action="/recipes" method="GET">
-        <input type="text" name="query" placeholder="Search recipes...">
-        <select name="filter">
-            <option value="">All</option>
-            <option value="vegan">Vegan</option>
-            <option value="dessert">Dessert</option>
-        </select>
-        <button type="submit">Search</button>
-    </form>
-
-    <a href="/recipes/create" class="btn-create">Create Recipe</a>
+    <nav class="navbar">
+        <div class="logo">CreateYourRecipe</div>
+    
+            <form class="search-form" action="/recipes" method="GET">
+                <input type="text" name="query" placeholder="Search recipes...">
+                <select name="filter">
+                    <option value="">All</option>
+                    <option value="vegan">Vegan</option>
+                    <option value="dessert">Dessert</option>
+                </select>
+                <button type="submit">Search</button>
+            </form>
+        
+            <ul class="nav-links">
+                <li><a href="/recipes/create" class="btn-create">Create Recipe</a></li>
+                <li><a href="#">Explore Recipes</a></li>
+            </ul>
+    </nav>
 </body>
 </html>
