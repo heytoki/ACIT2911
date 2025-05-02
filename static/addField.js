@@ -1,7 +1,19 @@
-element = document.getElementById("addIngredients");
-element.setAttribute(onclick, addIngredients());
-element.addEventListener(onclick, addIngredients());
+let selectEl = document.getElementById("addIngredients");
+selectEl.addEventListener("click", addIngredients);
 
+let textEl = document.getElementById("addInstructions");
+textEl = addEventListener("click", addInstruction);
+
+let ingContainer = document.getElementById("ingredientsForm");
 function addIngredients(){
-    console.log('test');
+    let elToClone = document.getElementById("ingr");
+    let clonedEl = elToClone.cloneNode(true);
+    ingContainer.appendChild(clonedEl)
+}
+
+let insContainer = document.getElementById("instructionsForm");
+function addInstruction(){
+    let eltoClone = document.getElementById("inst");
+    let clonedEl = eltoClone.cloneNode(true);
+    insContainer.appendChild(clonedEl)
 }

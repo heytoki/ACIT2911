@@ -119,10 +119,27 @@ input:focus {
     background-color: #6666AB;
 }
 
-#ingredientsForm li{
+#ingredientsForm li {
     list-style-type: none;
 }
 
 #createPage {
     justify-content: center;
+}
+
+.grid {
+    display: grid;
+    grid-template: 1fr / 1fr 1fr;
+}
+
+textarea, textarea:focus {
+    resize: none;
+    outline: none;
+    border: 1px solid gray;
+    vertical-align: top;
+}
+
+#inst {
+    font-size: 15px;
+    font-weight: bold;
 }
