@@ -1,19 +1,75 @@
 # manage.py
-# File to store functions that we can call in other files
-
+# Just to add sample data into our databse and manage it for testing
+from db import db
+from models import Recipe, Ingredient
+from app import app
 import json
 
-def save_instructions_to_json(recipe_id, instructions_text):
-    instructions_file = "instructions.json"
-    steps = [line.strip() for line in instructions_text.strip().split('\n') if line.strip()]
+def drop_all():
+    db.drop_all()
+    print("All tables dropped.")
 
-    try:
-        with open(instructions_file, 'r') as f:
-            data = json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError):
-        data = {}
+def create_all():
+    db.create_all()
+    print("All tables created.")
 
-    data[str(recipe_id)] = steps
+def add_recipes():
+    sample_data = {
+        "Spaghetti Bolognese": {
+            "instructions": "1. Cook pasta\n2. Prepare sauce\n3. Mix and serve",
+            "ingredients": ["Spaghetti", "Tomato sauce", "Ground beef"],
+            "cuisine": "Italian",
+            "cook_time": 30,
+            "difficulty": "Medium"
+        },
+        "Pancakes": {
+            "instructions": "1. Mix ingredients\n2. Pour batter\n3. Flip and serve",
+            "ingredients": ["Flour", "Milk", "Eggs"],
+            "cuisine": "American",
+            "cook_time": 15,
+            "difficulty": "Easy"
+        }
+    }
 
-    with open(instructions_file, 'w') as f:
-        json.dump(data, f, indent=4)
+
+    for title, data in sample_data.items():
+        recipe = Recipe(
+            title=title,
+            instructions=data["instructions"],
+            cuisine=data["cuisine"],
+            cook_time=data["cook_time"],
+            difficulty=data["difficulty"]
+        )
+        db.session.add(recipe)
+        db.session.commit()
+
+        for item in data["ingredients"]:
+            db.session.add(Ingredient(name=item, recipe_id=recipe.id))
+        db.session.commit()
+
+
+
+    print("Sample recipes added")
+
+def clear_recipes():
+    Ingredient.query.delete()
+    Recipe.query.delete()
+    db.session.commit()
+    print("All recipes and ingredients deleted.")
+
+
+if __name__ == "__main__":
+    with app.app_context():
+        command = input("Enter command (add, clear, drop, create): ").strip()
+
+        if command == "add":
+            add_recipes()
+        elif command == "clear":
+            clear_recipes()
+        elif command == "drop":
+            drop_all()
+        elif command == "create":
+            create_all()
+        else:
+            print("Invalid command")
+

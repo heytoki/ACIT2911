@@ -7,11 +7,12 @@ body {
 
 .navbar {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     padding: 10px 30px;
     background-color: lightblue;
     flex-wrap: nowrap;
+    width: 100%;
 }
 
 .logo {
@@ -30,23 +31,11 @@ body {
     font-weight: bold;
 }
 
-#center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    font-size: 25px;
-    padding-bottom: 5px;
-}
-
 #forms {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-}
-
-input:focus {
-    outline: none;
+    flex-grow: 1;
 }
 
 .search-form {
@@ -55,8 +44,7 @@ input:focus {
     padding: 15px;
     display: flex;
     gap: 10px;
-    flex-grow: 1;
-    justify-content: flex-end;
+    justify-content: flex-start;
     align-items: center;
 }
 
@@ -64,17 +52,6 @@ input:focus {
     width: 500px;
     padding: 5px;
     font-size: 1rem;
-}
-
-.search-form input[type="number"] {
-    font-size: 1rem;
-    border-radius: 0px;
-    border: 1px solid gray;
-    height: 22px;
-}
-
-.search-form input[type="number"]:hover {
-    border: 1px solid #26A0DA;
 }
 
 .search-form button {
@@ -88,20 +65,11 @@ input:focus {
     border: 1px solid #26A0DA;
 }
 
-.search-form select {
-    padding: 6px;
-    background-color: white;
-    border: 1px solid gray
-}
-
-.search-form select:hover {
-    border: 1px solid #26A0DA;
-}
-
 .nav-links {
     display: flex;
     list-style: none;
     gap: 20px;
+    margin-left: 20px;
 }
 
 .nav-links a {
@@ -111,20 +79,43 @@ input:focus {
     margin: 3px;
     border-radius: 3px;
     font-weight: bold;
-    background-color: rgb(200, 200, 255);
+    background-color: rgb(156, 182, 206);
     transition: background-color 500ms;
 }
 
 .nav-links a:hover {
     background-color: #6666AB;
+}   
+
+.recipe-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.recipe-card {
+    background-color: lightblue;
+    padding: 20px;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 80%;  /* Adjust the width to your liking */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.recipe-card h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.recipe-card p {
+    font-size: 1rem;
+    line-height: 1.5;
 }
 
 #ingredientsForm li {
     list-style-type: none;
-}
-
-#createPage {
-    justify-content: center;
 }
 
 .grid {
@@ -143,3 +134,4 @@ textarea, textarea:focus {
     font-size: 15px;
     font-weight: bold;
 }
+

@@ -6,9 +6,8 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>Find your Recipes</h1>
+    <h1><img class="logo" src="/static/temp.jpg">CreateYourRecipe.com</h1>
     <nav class="navbar">
-        <div id="title"><img class="logo" src="/static/temp.jpg">CreateYourRecipe</div>
         <form class="search-form" action="/recipes" method="GET">
             <input type="text" name="query" placeholder="Search recipes...">
             <select name="filter">
@@ -23,5 +22,36 @@
             <li><a href="#">Explore Recipes</a></li>
         </ul>
     </nav>
+    <div class="recipe-list">
+        {% for recipe in recipes %}
+            <div class="recipe-card">
+                <h2>{{ recipe.title }}</h2>
+
+                {% if recipe.difficulty %}
+                <p> Recipe Difficulty: {{ recipe.difficulty }}</p>
+                {% endif %}
+
+                {% if recipe.cuisine %}
+                <p>Cuisine:  {{ recipe.cuisine }}</p>
+                {% endif %}
+
+                {% if recipe.instructions %}
+                    <h3>Instructions</h3>
+                    <p>{{ recipe.instructions }}</p>
+                {% endif %}
+
+                {% if recipe.cook_time %}
+                <p> Recipe Cook Time: {{ recipe.cook_time }}</p>
+                {% endif %}
+
+
+
+
+            </div>
+        {% else %}
+            <p>No recipes found.</p>
+        {% endfor %}
+    </div>
+    
 </body>
 </html>

@@ -2,7 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for
 from pathlib import Path
 from db import db
 from models import Recipe, Ingredient
-from manage import save_instructions_to_json
+from utils import save_instructions_to_json
+
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///recipes.db"
@@ -18,7 +19,9 @@ with app.app_context():
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    recipes = Recipe.query.all()
+    return render_template('home.html', recipes=recipes)
+
 
 @app.route('/recipes')
 def list():
