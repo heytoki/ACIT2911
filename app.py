@@ -59,6 +59,10 @@ def create():
 def recipe():
     return render_template('recipe.html')
 
+@app.route('/ingredient')
+def ingredient():
+    return render_template('ingredient.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5555)

@@ -1,11 +1,5 @@
-let selectEl = document.getElementById("addIngredients");
-selectEl.addEventListener("click", addIngredients);
-
-let textEl = document.getElementById("addInstructions");
-textEl = addEventListener("click", addInstruction);
-
 let ingContainer = document.getElementById("ingredientsForm");
-function addIngredients(){
+function addIngredient(){
     let elToClone = document.getElementById("ingr");
     let clonedEl = elToClone.cloneNode(true);
     ingContainer.appendChild(clonedEl)
@@ -16,4 +10,27 @@ function addInstruction(){
     let eltoClone = document.getElementById("inst");
     let clonedEl = eltoClone.cloneNode(true);
     insContainer.appendChild(clonedEl)
+}
+
+function remInstruction() {
+    var element = document.getElementById('instructionsForm');
+    var nested = element.getElementsByTagName('li');
+    if(nested.length > 1){
+        element.removeChild(nested[nested.length - 1]);
+    }
+}
+
+function remIngredient() {
+    var element = document.getElementById('ingredientsForm');
+    var nested = element.getElementsByTagName('li');
+    if(nested.length > 1){
+        element.removeChild(nested[nested.length - 1]);
+    }
+}
+
+function popUp(){
+    window.open(
+        '/ingredient',
+        '_blank'
+    );
 }

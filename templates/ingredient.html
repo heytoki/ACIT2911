@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Ingredient</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1 id="pageHeader"><img class="logo" src="/static/temp.jpg">CreateYourRecipe.com</h1>
+    <h3>Add a New Ingredient to Database</h3>
+    <nav class="navbar">
+        <form class="search-form">
+            <input type="text" name="name" placeholder="Ingredient Name">
+            <select name="measures">
+                <option value="weight">Weight</option>
+                <option value="volume">Volume</option>
+                <option value="cup">Cups</option>
+                <option value="table">Tablespoons</option>
+                <option value="tea">Teaspoons</option>
+            </select>
+            <button type="submit">Add</button>
+        </form>
+    </nav>
+</body>
+</html>

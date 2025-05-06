@@ -5,13 +5,21 @@ body {
     color: #333;
 }
 
+#pageHeader {
+    display: flex;
+    font-weight: bold;
+    align-items: center;
+    font-size: 24px;
+}
+
 .navbar {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: 10px 30px;
     background-color: lightblue;
     flex-wrap: nowrap;
+    padding-top: 10px;
+    padding-bottom: 10px;
     width: 100%;
 }
 
@@ -52,6 +60,10 @@ body {
     width: 500px;
     padding: 5px;
     font-size: 1rem;
+}
+
+.search-form input[type="text"]:focus {
+    outline: none;
 }
 
 .search-form button {
@@ -124,6 +136,7 @@ body {
 .grid {
     display: grid;
     grid-template: 1fr / 1fr 1fr;
+    background-color: lightblue;
 }
 
 textarea, textarea:focus {
@@ -138,3 +151,6 @@ textarea, textarea:focus {
     font-weight: bold;
 }
 
+#addRemButtons {
+    padding-left: 6.75%;
+}
