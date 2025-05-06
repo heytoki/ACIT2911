@@ -32,8 +32,8 @@ def list():
 def create():
     if request.method == 'POST':
         title = request.form.get('title')
-        ingredients_text = request.form.get('ingredients')  # multiple lines
-        instructions_text = request.form.get('instructions')  # optional
+        ingredients_text = request.form.get('ingredients')  
+        instructions_text = request.form.get('instructions') 
 
         # Create recipe
         new_recipe = Recipe(title=title, instructions=instructions_text)
