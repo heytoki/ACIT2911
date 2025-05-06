@@ -11,16 +11,16 @@
     <h1 id="pageHeader"><img class="logo" src="/static/temp.jpg">CreateYourRecipe.com</h1>
     <h3>Create a New Recipe</h3>
     <form class="grid">
-        <div>
+        <div class="top">Recipe Name: <input type="text" placeholder="Name of Recipe"></div>
+        <div class="left">
             <div class="search-form">
                 <ul id="ingredientsForm">
                     <li id="ingr">
                         <select>
                             <option value="" selected disabled>Ingredients</option>
-                            <option value="Egg">Egg</option>
-                            <option value="Milk">Milk</option>
-                            <option value="Flour">Flour</option>
-                            <option value="Other">Other</option>
+                            {% for subject in ingredientsList %}
+                                <option>{{ subject.name }}</option>
+                            {% endfor %}
                         </select>
                         <input type="number" name="amount" placeholder="Amount" required>
                     </li>
@@ -31,7 +31,7 @@
                 <button type="button" id="addIngredients" onclick="remIngredient()">Remove Field</button>
             </div>
         </div>
-        <div>
+        <div class="right">
             <div class="search-form">
                 <ol id="instructionsForm">
                     <li id="inst">

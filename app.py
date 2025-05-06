@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from pathlib import Path
 from db import db
 from models import Recipe, Ingredient
+from sqlalchemy import asc
 from utils import save_instructions_to_json
 import searchRecipe as s
 
@@ -30,10 +31,11 @@ def list():
 
 @app.route('/recipes/create', methods=['GET', 'POST'])
 def create():
+    ingredientsList = Ingredient.query.order_by(asc(Ingredient.name)).all()
     if request.method == 'POST':
         title = request.form.get('title')
-        ingredients_text = request.form.get('ingredients')  # multiple lines
-        instructions_text = request.form.get('instructions')  # optional
+        ingredients_text = request.form.get('ingredientsForm')  # multiple lines
+        instructions_text = request.form.get('instructionsForm')  # optional
 
         # Create recipe
         new_recipe = Recipe(title=title, instructions=instructions_text)
@@ -53,7 +55,7 @@ def create():
 
         return redirect(url_for('home'))
 
-    return render_template('create.html')
+    return render_template('create.html', ingredientsList=ingredientsList)
 
 @app.route('/recipes/recipe')
 def recipe():
@@ -62,7 +64,6 @@ def recipe():
 @app.route('/ingredient')
 def ingredient():
     return render_template('ingredient.html')
-
 
 if __name__ == '__main__':
     app.run(debug=True, port=5555)

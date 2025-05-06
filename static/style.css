@@ -135,8 +135,29 @@ body {
 
 .grid {
     display: grid;
-    grid-template: 1fr / 1fr 1fr;
+    grid-template-areas:
+        "top top"
+        "left right";
+    grid-template-columns: 1fr 1fr;
     background-color: lightblue;
+}
+
+.grid > div.left {
+    grid-area: left;
+}
+
+.grid > div.right {
+    grid-area: right;
+}
+
+.grid > div.top {
+    grid-area: top;
+    text-align: center;
+    padding-top: 5px;
+}
+
+div.top > input:focus {
+    outline: none;
 }
 
 textarea, textarea:focus {
