@@ -10,8 +10,8 @@
 <body>
     <h1 id="pageHeader"><img class="logo" src="/static/temp.jpg">CreateYourRecipe.com</h1>
     <h3>Create a New Recipe</h3>
-    <div class="grid">
-        <form>
+    <form class="grid">
+        <div>
             <div class="search-form">
                 <ul id="ingredientsForm">
                     <li id="ingr">
@@ -30,8 +30,8 @@
                 <button type="button" id="addIngredients" onclick="addIngredient()">Add Another</button>
                 <button type="button" id="addIngredients" onclick="remIngredient()">Remove Field</button>
             </div>
-        </form>
-        <form>
+        </div>
+        <div>
             <div class="search-form">
                 <ol id="instructionsForm">
                     <li id="inst">
@@ -43,8 +43,8 @@
                 <button type="button" id="addInstructions" onclick="addInstruction()">Add Another</button>
                 <button type="button" id="addInstructions" onclick="remInstruction()">Remove Field</button>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
     <div class="search-form" id="createPage">
         <button type="button" id="newIngredient" onclick="popUp()">Add Unlisted Ingredient</button>
         <button type="submit">Save</button>
