@@ -3,6 +3,7 @@ from pathlib import Path
 from db import db
 from models import Recipe, Ingredient
 from utils import save_instructions_to_json
+import searchRecipe as s
 
 
 app = Flask(__name__)
@@ -22,11 +23,10 @@ def home():
     recipes = Recipe.query.all()
     return render_template('home.html', recipes=recipes)
 
-
 @app.route('/recipes')
 def list():
-    recipes = Recipe.query.all()
-    return render_template('list.html', recipes = recipes)
+    recipes = s.searchFunc(request.args.get('query'))
+    return render_template('list.html', recipes=recipes)
 
 @app.route('/recipes/create', methods=['GET', 'POST'])
 def create():

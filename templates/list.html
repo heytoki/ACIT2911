@@ -1,32 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Recipes List</title>
 </head>
+
 <body>
     <h1>List of Recipes</h1>
+    <div class="recipe-list">
+        {% for recipe in recipes %}
+        <div class="recipe-card">
+            <h2>{{ recipe.title }}</h2>
 
-    <h3>Recipe 1: Spaghetti</h3>
-    <p><strong>Instructions:</strong> Boil pasta. Add sauce.</p>
-    <p><strong>Ingredients:</strong></p>
-    <ul>
-        <li>Pasta</li>
-        <li>Tomato Sauce</li>
-        <li>Salt</li>
-    </ul>
-    <hr>
+            {% if recipe.difficulty %}
+            <p> Recipe Difficulty: {{ recipe.difficulty }}</p>
+            {% endif %}
 
-    <h3>Recipe 2: Pancakes</h3>
-    <p><strong>Instructions:</strong> Mix batter. Cook on pan.</p>
-    <p><strong>Ingredients:</strong></p>
-    <ul>
-        <li>Flour</li>
-        <li>Milk</li>
-        <li>Eggs</li>
-    </ul>
-    <hr>
+            {% if recipe.cuisine %}
+            <p>Cuisine: {{ recipe.cuisine }}</p>
+            {% endif %}
 
+            {% if recipe.instructions %}
+            <h3>Instructions</h3>
+            <p>{{ recipe.instructions }}</p>
+            {% endif %}
+
+            {% if recipe.cook_time %}
+            <p> Recipe Cook Time: {{ recipe.cook_time }}</p>
+            {% endif %}
+        </div>
+        {% else %}
+        <p>No recipes found.</p>
+        {% endfor %}
+    </div>
     <a href="/"><button type="button">Go Back</button></a>
 </body>
+
 </html>
