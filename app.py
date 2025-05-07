@@ -6,7 +6,6 @@ from sqlalchemy import asc
 from utils import save_instructions_to_json
 import searchRecipe as s
 
-
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///recipes.db"
 
@@ -26,7 +25,9 @@ def home():
 
 @app.route('/recipes')
 def list():
-    recipes = s.searchFunc(request.args.get('query'))
+    filterType = request.args.get('filterType', default='title')
+    print(f"stdout: {filterType}")
+    recipes = s.searchFunc(request.args.get('query'), filterType)
     return render_template('list.html', recipes=recipes)
 
 @app.route('/recipes/create', methods=['GET', 'POST'])
