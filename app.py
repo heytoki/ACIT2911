@@ -26,8 +26,8 @@ def home():
 @app.route('/recipes')
 def list():
     filterType = request.args.get('filterType', default='title')
-    print(f"stdout: {filterType}")
-    recipes = s.searchFunc(request.args.get('query'), filterType)
+    param = request.args.get(filterType)
+    recipes = s.searchFunc(request.args.get('query'), filterType, param)
     return render_template('list.html', recipes=recipes)
 
 @app.route('/recipes/create', methods=['GET', 'POST'])
