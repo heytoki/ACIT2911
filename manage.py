@@ -28,8 +28,37 @@ def add_recipes():
             "cuisine": "American",
             "cook_time": 15,
             "difficulty": "Easy"
+        },
+        "Chicken Curry": {
+            "instructions": "1. Sauté onions\n2. Add spices and chicken\n3. Simmer with coconut milk",
+            "ingredients": ["Chicken", "Onions", "Spices", "Coconut milk"],
+            "cuisine": "Indian",
+            "cook_time": 40,
+            "difficulty": "Hard"
+        },
+        "Sushi Rolls": {
+            "instructions": "1. Prepare rice\n2. Add fillings\n3. Roll and slice",
+            "ingredients": ["Sushi rice", "Nori", "Fish", "Vegetables"],
+            "cuisine": "Japanese",
+            "cook_time": 50,
+            "difficulty": "Hard"
+        },
+        "Tacos": {
+            "instructions": "1. Prepare fillings\n2. Heat tortillas\n3. Assemble tacos",
+            "ingredients": ["Tortillas", "Beef", "Lettuce", "Cheese"],
+            "cuisine": "Mexican",
+            "cook_time": 25,
+            "difficulty": "Medium"
+        },
+        "Greek Salad": {
+            "instructions": "1. Chop vegetables\n2. Add feta and olives\n3. Drizzle with olive oil",
+            "ingredients": ["Tomatoes", "Cucumber", "Feta", "Olives", "Olive oil"],
+            "cuisine": "Greek",
+            "cook_time": 10,
+            "difficulty": "Easy"
         }
     }
+
 
 
     for title, data in sample_data.items():
