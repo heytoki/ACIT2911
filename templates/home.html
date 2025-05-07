@@ -17,9 +17,30 @@
                 <input type="text" name="query" placeholder="Search recipes...">
                 <select name="filterType">
                     <option value="title">Recipe Name</option>
-                    <option value="cuisine">Cuisine</option>
+                    <option value="cuisineTypes">Cuisine</option>
                     <option value="time">Cook Time</option>
                     <option value="diff">Difficulty</option>
+                </select>
+                <select name="cuisineTypes" class="hidden">
+                    <option></option>
+                    <option value="italian">Italian</option>
+                    <option value="chinese">Chinese</option>
+                    <option value="thai">Thai</option>
+                    <option value="indian">Indian</option>
+                    <option value="french">French</option>
+                    <option value="japanese">Japanese</option>
+                    <option value="mexican">Mexican</option>
+                    <option value="other">Other</option>
+                </select>
+                <div id="cookTimeEl" class="hidden">
+                    Cooking Time (minutes) or Less: 
+                    <input type="number" name="time">
+                </div>
+                <select name="diff" class="hidden">
+                    <option></option>
+                    <option value="hard">Hard</option>
+                    <option value="medium">Medium</option>
+                    <option value="easy">Easy</option>
                 </select>
                 <button type="submit">Search</button>
             </form>
@@ -27,7 +48,8 @@
                 <li><a href="/recipes/create" class="nav-button">Create Recipe</a></li>
             </ul>
         </nav>
-    </header>    
+    </header>
+    <script src="/static/homeFilter.js"></script>  
 
     <div class="recipe-list">
         {% for recipe in recipes %}
@@ -44,7 +66,7 @@
 
                 {% if recipe.instructions %}
                     <h3>Instructions</h3>
-                    <p>{{ recipe.instructions }}</p>
+                    <p class = "instructions">{{ recipe.instructions }}</p>
                 {% endif %}
 
                 {% if recipe.cook_time %}

@@ -177,6 +177,12 @@ body {
     line-height: 1.5;
 }
 
+.recipe-card .instructions {
+    font-size: 1rem;
+    line-height: 1.5;
+    white-space: pre-line;
+}
+
 #ingredientsForm li {
     list-style-type: none;
 }
@@ -237,4 +243,8 @@ textarea, textarea:focus {
     display: grid;
     grid-template-rows: 1fr 1fr;
     grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.hidden {
+    display: none;
 }

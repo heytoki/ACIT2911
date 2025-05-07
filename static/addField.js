@@ -1,15 +1,24 @@
 let ingContainer = document.getElementById("ingredientsForm");
-function addIngredient(){
+function addIngredient() {
     let elToClone = document.getElementById("ingr");
     let clonedEl = elToClone.cloneNode(true);
-    ingContainer.appendChild(clonedEl)
+
+    // Clear input fields before appending
+    clonedEl.querySelector("input").value = "";
+    clonedEl.querySelector("select").selectedIndex = 0;
+
+    ingContainer.appendChild(clonedEl);
 }
 
 let insContainer = document.getElementById("instructionsForm");
-function addInstruction(){
+function addInstruction() {
     let eltoClone = document.getElementById("inst");
     let clonedEl = eltoClone.cloneNode(true);
-    insContainer.appendChild(clonedEl)
+
+    // Clear textarea before appending
+    clonedEl.querySelector("textarea").value = "";
+
+    insContainer.appendChild(clonedEl);
 }
 
 function remInstruction() {
