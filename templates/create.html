@@ -10,16 +10,16 @@
 <body>
     <h1 id="pageHeader"><img class="logo" src="/static/temp.jpg">CreateYourRecipe.com</h1>
     <h3>Create a New Recipe</h3>
-    <form class="grid">
-        <div class="top">Recipe Name: <input type="text" placeholder="Name of Recipe"></div>
+    <form class="grid" method="POST" action="">
+        <div class="top">Recipe Name: <input type="text" name="recipeName" placeholder="Name of Recipe"></div>
         <div class="left">
             <div class="search-form">
                 <ul id="ingredientsForm">
                     <li id="ingr">
-                        <select>
+                        <select name="ingredientNames">
                             <option value="" selected disabled>Ingredients</option>
                             {% for subject in ingredientsList %}
-                                <option>{{ subject.name }}</option>
+                                <option value={{ subject.name }}>{{ subject.name + ' ' + subject.measure }}</option>
                             {% endfor %}
                         </select>
                         <input type="number" name="amount" placeholder="Amount" required>
@@ -35,7 +35,7 @@
             <div class="search-form">
                 <ol id="instructionsForm">
                     <li id="inst">
-                        <textarea placeholder="Instruction" rows="5" cols="40"></textarea>
+                        <textarea placeholder="Instruction" rows="5" cols="40" name="instructionsList"></textarea>
                     </li>
                 </ol>
             </div>
