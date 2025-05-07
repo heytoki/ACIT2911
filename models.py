@@ -14,9 +14,6 @@ class Ingredient(db.Model):
     measure = db.Column(db.String(), nullable=False)
 
 class Reqs(db.Model):
-    recipe_id = db.Column(db.Integer, db.ForeignKey('recipe.id'))
-    ingredient_id = db.Column(db.Integer, db.ForeignKey('ingredient.id'))
-    db.PrimaryKeyConstraint(
-        recipe_id, ingredient_id
-    )
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipe.id'), primary_key=True)
+    ingredient_id = db.Column(db.Integer, db.ForeignKey('ingredient.id'), primary_key=True)
     qty = db.Column(db.Integer)
