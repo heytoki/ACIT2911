@@ -11,8 +11,26 @@
     <h1 id="pageHeader"><img class="logo" src="/static/temp.jpg">CreateYourRecipe.com</h1>
     <h3>Create a New Recipe</h3>
     <form class="grid" method="POST" action="/recipes/create">
-        <div class="top">Recipe Name: <input type="text" name="recipeName" placeholder="Name of Recipe"></div>
-        <div class="left">
+        <div class="recipeNameField">Recipe Name: <input type="text" name="recipeName" placeholder="Name of Recipe"></div>
+        <div class="cuisineField">
+            <input type="radio" name="cuisineType" value="italian">
+            <label for="cuisineType">Italian</label>
+            <input type="radio" name="cuisineType" value="chinese">
+            <label for="cuisineType">Chinese</label>
+            <input type="radio" name="cuisineType" value="thai">
+            <label for="cuisineType">Thai</label>
+            <input type="radio" name="cuisineType" value="indian">
+            <label for="cuisineType">Indian</label>
+            <input type="radio" name="cuisineType" value="french">
+            <label for="cuisineType">French</label>
+            <input type="radio" name="cuisineType" value="japanese">
+            <label for="cuisineType">Japanese</label>
+            <input type="radio" name="cuisineType" value="mexican">
+            <label for="cuisineType">Mexican</label>
+            <input type="radio" name="cuisineType" value="other">
+            <label for="cuisineType">Other</label>
+        </div>
+        <div class="ingredientListField">
             <div class="search-form">
                 <ul id="ingredientsForm">
                     <li id="ingr">
@@ -31,7 +49,7 @@
                 <button type="button" id="addIngredients" onclick="remIngredient()">Remove Field</button>
             </div>
         </div>
-        <div class="right">
+        <div class="instructionListField">
             <div class="search-form">
                 <ol id="instructionsForm">
                     <li id="inst">
@@ -43,6 +61,18 @@
                 <button type="button" id="addInstructions" onclick="addInstruction()">Add Another</button>
                 <button type="button" id="addInstructions" onclick="remInstruction()">Remove Field</button>
             </div>
+        </div>
+        <div class="cookTimeField">
+            Enter time required to cook (minutes): 
+            <input type="number" name="time">
+        </div>
+        <div class="difficultyField">
+            <input type="radio" name="diff" value="hard">
+            <label for="cuisineType">Hard</label>
+            <input type="radio" name="diff" value="medium">
+            <label for="cuisineType">Medium</label>
+            <input type="radio" name="diff" value="easy">
+            <label for="cuisineType">Easy</label>
         </div>
     </form>
     <div class="search-form" id="createPage">

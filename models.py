@@ -5,12 +5,18 @@ class Recipe(db.Model):
     title = db.Column(db.String(100), nullable=False)
     instructions = db.Column(db.Text)
     cuisine = db.Column(db.String(50))
-    cook_time = db.Column(db.String)
+    cook_time = db.Column(db.Integer)
     difficulty = db.Column(db.String(20))
-    ingredients = db.relationship("Ingredient", backref="recipe", lazy=True)
 
 class Ingredient(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    measure = db.Column(db.String())
+    measure = db.Column(db.String(), nullable=False)
+
+class Reqs(db.Model):
     recipe_id = db.Column(db.Integer, db.ForeignKey('recipe.id'))
+    ingredient_id = db.Column(db.Integer, db.ForeignKey('ingredient.id'))
+    db.PrimaryKeyConstraint(
+        recipe_id, ingredient_id
+    )
+    qty = db.Column(db.Integer)
