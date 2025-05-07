@@ -6,23 +6,29 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1><img class="logo" src="/static/temp.jpg">CreateYourRecipe.com</h1>
-    <nav class="navbar">
-        <form class="search-form" action="/recipes" method="GET">
-            <input type="text" name="query" placeholder="Search recipes...">
-            <select name="filterType">
-                <option value="title">Recipe Name</option>
-                <option value="cuisine">Cuisine</option>
-                <option value="time">Cook Time</option>
-                <option value="diff">Difficulty</option>
-            </select>
-            <button type="submit">Search</button>
-        </form>
-        <ul class="nav-links">
-            <li><a href="/recipes/create" class="btn-create">Create Recipe</a></li>
-            <li><a href="#">Explore Recipes</a></li>
-        </ul>
-    </nav>
+    <header class="header">
+        <div class="header-top">
+            <img class="logo" src="/static/temp.jpg" alt="Logo">
+            <div class="title">CreateYourRecipe.com</div>
+        </div>
+    
+        <nav class="navbar">
+            <form class="search-form" action="/recipes" method="GET">
+                <input type="text" name="query" placeholder="Search recipes...">
+                <select name="filterType">
+                    <option value="title">Recipe Name</option>
+                    <option value="cuisine">Cuisine</option>
+                    <option value="time">Cook Time</option>
+                    <option value="diff">Difficulty</option>
+                </select>
+                <button type="submit">Search</button>
+            </form>
+            <ul class="nav-links">
+                <li><a href="/recipes/create" class="nav-button">Create Recipe</a></li>
+            </ul>
+        </nav>
+    </header>    
+
     <div class="recipe-list">
         {% for recipe in recipes %}
             <div class="recipe-card">
@@ -49,6 +55,5 @@
             <p>No recipes found.</p>
         {% endfor %}
     </div>
-    
 </body>
 </html>
