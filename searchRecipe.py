@@ -65,5 +65,5 @@ def searchFunc(query, filterType, param):
         if param == 'easy':
             return Recipe.query.filter(and_(
                 Recipe.title.like('%'+query+'%'),
-                Recipe.difficulty.like('medium')
+                Recipe.difficulty.like('easy')
             )).all()  
