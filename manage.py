@@ -1,9 +1,7 @@
 # manage.py
-# Just to add sample data into our databse and manage it for testing
 from db import db
-from models import Recipe, Ingredient
+from models import Recipe, Ingredient, Reqs
 from app import app
-import json
 
 def drop_all():
     db.drop_all()
@@ -59,8 +57,6 @@ def add_recipes():
         }
     }
 
-
-
     for title, data in sample_data.items():
         recipe = Recipe(
             title=title,
@@ -73,19 +69,24 @@ def add_recipes():
         db.session.commit()
 
         for item in data["ingredients"]:
-            db.session.add(Ingredient(name=item, recipe_id=recipe.id))
+            ingredient = Ingredient.query.filter_by(name=item).first()
+            if not ingredient:
+                ingredient = Ingredient(name=item, measure="unit")
+                db.session.add(ingredient)
+                db.session.commit()
+
+            req = Reqs(recipe_id=recipe.id, ingredient_id=ingredient.id, qty=1)
+            db.session.add(req)
         db.session.commit()
-
-
 
     print("Sample recipes added")
 
 def clear_recipes():
-    Ingredient.query.delete()
-    Recipe.query.delete()
+    db.session.query(Reqs).delete()
+    db.session.query(Ingredient).delete()
+    db.session.query(Recipe).delete()
     db.session.commit()
-    print("All recipes and ingredients deleted.")
-
+    print("All recipes, ingredients, and requirements deleted.")
 
 if __name__ == "__main__":
     with app.app_context():
@@ -101,4 +102,3 @@ if __name__ == "__main__":
             create_all()
         else:
             print("Invalid command")
-

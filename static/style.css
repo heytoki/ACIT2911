@@ -177,6 +177,12 @@ body {
     line-height: 1.5;
 }
 
+.recipe-card .instructions {
+    font-size: 1rem;
+    line-height: 1.5;
+    white-space: pre-line;
+}
+
 #ingredientsForm li {
     list-style-type: none;
 }
@@ -184,21 +190,34 @@ body {
 .grid {
     display: grid;
     grid-template-areas:
-        "top top"
-        "left right";
+        "top cui"
+        "ing ins"
+        "time diff";
     grid-template-columns: 1fr 1fr;
     background-color: lightblue;
 }
 
-.grid > div.left {
-    grid-area: left;
+.grid > div.ingredientListField {
+    grid-area: ing;
 }
 
-.grid > div.right {
-    grid-area: right;
+.grid > div.instructionListField {
+    grid-area: ins;
 }
 
-.grid > div.top {
+.grid > div.cuisineField {
+    grid-area: cui;
+}
+
+.grid > div.cookTimeField {
+    grid-area: time;
+}
+
+.grid > div.difficultyField {
+    grid-area: diff;
+}
+
+.grid > div.recipeNameField {
     grid-area: top;
     text-align: center;
     padding-top: 5px;
@@ -220,7 +239,30 @@ textarea, textarea:focus {
     font-weight: bold;
 }
 
-#addRemButtons {
-    padding-left: 6.75%;
+.cuisineField {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
+.hidden {
+    display: none;
+}
+/* Flash message styles */
+.flashes {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px auto;
+    max-width: 800px;
+    text-align: center;
+}
+
+.flashes li {
+    background-color: #4CAF50; /* green */
+    color: white;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
