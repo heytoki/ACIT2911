@@ -248,3 +248,21 @@ textarea, textarea:focus {
 .hidden {
     display: none;
 }
+/* Flash message styles */
+.flashes {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px auto;
+    max-width: 800px;
+    text-align: center;
+}
+
+.flashes li {
+    background-color: #4CAF50; /* green */
+    color: white;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
