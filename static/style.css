@@ -196,27 +196,18 @@ body {
     list-style-type: none;
 }
 
-
-#pageHeader {
-    display: flex;
-    justify-content: center;
-    color: white;
-    background-color: #130679;
-    padding-bottom: 30px;
-    padding-top: 30px;
-    width: 30%;
-
-
-}
-
 .grid {
+    padding-top: 1%;
+    text-align: center;
+    margin: 1%;
+    border-radius: 5px;
     display: grid;
     grid-template-areas:
         "top cui"
+        "time diff"
         "ing ins"
-        "time diff";
+        "bot bot";
     grid-template-columns: 1fr 1fr;
-    background-color: #130679;
 }
 
 .grid > div.ingredientListField {
@@ -241,8 +232,22 @@ body {
 
 .grid > div.recipeNameField {
     grid-area: top;
-    text-align: center;
     padding-top: 5px;
+}
+
+.grid > button.saveBtn {
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 1%;
+    grid-area: bot;
+}
+
+.grid > div {
+    border-radius: 5px;
+    background-color: #130679;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    border: 0.5px solid white;
+    margin: 2px;
 }
 
 div.top > input:focus {
@@ -270,6 +275,7 @@ textarea, textarea:focus {
 .hidden {
     display: none;
 }
+
 /* Flash message styles */
 .flashes {
     list-style-type: none;

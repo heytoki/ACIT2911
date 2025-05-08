@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Create New Recipe</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
-    <h1 id="pageHeader"><img class="logo" src="/static/chef.jpg">CreateYourRecipe.com</h1>
-    <h3>Create a New Recipe</h3>
 
+<body>
+    <header class="header">
+        <div class="header-top">
+            <img class="logo" src="/static/chef.jpg" alt="Logo">
+            <div class="title">CreateYourRecipe.com</div>
+        </div>
+        <nav class="navbar">
+            Create your Recipe!
+        </nav>
+    </header>
     <form class="grid" method="POST" action="/recipes/create">
         <div class="recipeNameField">
             Recipe Name: <input type="text" name="recipeName" placeholder="Name of Recipe">
@@ -25,6 +33,17 @@
             <input type="radio" name="cuisineType" value="other"><label>Other</label>
         </div>
 
+        <div class="cookTimeField">
+            Enter time required to cook (minutes):
+            <input type="number" name="time">
+        </div>
+
+        <div class="difficultyField">
+            <input type="radio" name="diff" value="hard"><label>Hard</label>
+            <input type="radio" name="diff" value="medium"><label>Medium</label>
+            <input type="radio" name="diff" value="easy"><label>Easy</label>
+        </div>
+
         <div class="ingredientListField">
             <div class="search-form">
                 <ul id="ingredientsForm">
@@ -32,14 +51,14 @@
                         <select name="ingredientNames">
                             <option value="" selected disabled>Ingredients</option>
                             {% for subject in ingredientsList %}
-                                <option value="{{ subject.name }}">{{ subject.name }} {{ subject.measure }}</option>
+                            <option value="{{ subject.name }}">{{ subject.name }} {{ subject.measure }}</option>
                             {% endfor %}
                         </select>
                         <input type="number" name="amount" placeholder="Amount" required>
                     </li>
                 </ul>
             </div>
-            <div class="search-form">
+            <div class="search-form" style="padding-left: 5%; padding-bottom: 3%;">
                 <button type="button" onclick="addIngredient()">Add Another</button>
                 <button type="button" onclick="remIngredient()">Remove Field</button>
             </div>
@@ -53,27 +72,16 @@
                     </li>
                 </ol>
             </div>
-            <div class="search-form">
+            <div class="search-form" style="padding-left: 5%; padding-bottom: 3%;">
                 <button type="button" onclick="addInstruction()">Add Another</button>
                 <button type="button" onclick="remInstruction()">Remove Field</button>
             </div>
         </div>
 
-        <div class="cookTimeField">
-            Enter time required to cook (minutes): 
-            <input type="number" name="time">
-        </div>
-
-        <div class="difficultyField">
-            <input type="radio" name="diff" value="hard"><label>Hard</label>
-            <input type="radio" name="diff" value="medium"><label>Medium</label>
-            <input type="radio" name="diff" value="easy"><label>Easy</label>
-        </div>
-
-        <button type="submit">Save</button>
+        <button class="saveBtn" type="submit">Save</button>
     </form>
 
-    <div class="search-form" id="createPage">
+    <div class="search-form" id="createPage" style="padding-left: 1%;">
         <button type="button" onclick="popUp()">Add Unlisted Ingredient</button>
         <button type="button" id="downloadBtn">Download</button>
         <button type="button" onclick="clearForm()">Delete</button>
@@ -108,17 +116,17 @@
             // Clear text inputs
             document.querySelector("input[name='recipeName']").value = "";
             document.querySelector("input[name='time']").value = "";
-    
+
             // Uncheck radio buttons
             document.querySelectorAll("input[name='cuisineType'], input[name='diff']").forEach(radio => radio.checked = false);
-    
+
             // it will reset ingredient field
             const ingrForm = document.getElementById("ingredientsForm");
             const ingrItems = ingrForm.querySelectorAll("li");
             for (let i = ingrItems.length - 1; i > 0; i--) ingrItems[i].remove();
             ingrItems[0].querySelector("select").selectedIndex = 0;
             ingrItems[0].querySelector("input").value = "";
-    
+
             // This will Reset instruction field
             const instForm = document.getElementById("instructionsForm");
             const instItems = instForm.querySelectorAll("li");
@@ -126,6 +134,7 @@
             instItems[0].querySelector("textarea").value = "";
         }
     </script>
-    
+
 </body>
+
 </html>
