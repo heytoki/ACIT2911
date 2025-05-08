@@ -1,60 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Create New Recipe</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-
 <body>
     <h1 id="pageHeader"><img class="logo" src="/static/temp.jpg">CreateYourRecipe.com</h1>
     <h3>Create a New Recipe</h3>
-    <div class="grid">
-        <form>
+
+    <form class="grid" method="POST" action="/recipes/create">
+        <div class="recipeNameField">
+            Recipe Name: <input type="text" name="recipeName" placeholder="Name of Recipe">
+        </div>
+
+        <div class="cuisineField">
+            <input type="radio" name="cuisineType" value="italian"><label>Italian</label>
+            <input type="radio" name="cuisineType" value="chinese"><label>Chinese</label>
+            <input type="radio" name="cuisineType" value="thai"><label>Thai</label>
+            <input type="radio" name="cuisineType" value="indian"><label>Indian</label>
+            <input type="radio" name="cuisineType" value="french"><label>French</label>
+            <input type="radio" name="cuisineType" value="japanese"><label>Japanese</label>
+            <input type="radio" name="cuisineType" value="mexican"><label>Mexican</label>
+            <input type="radio" name="cuisineType" value="other"><label>Other</label>
+        </div>
+
+        <div class="ingredientListField">
             <div class="search-form">
                 <ul id="ingredientsForm">
                     <li id="ingr">
-                        <select>
+                        <select name="ingredientNames">
                             <option value="" selected disabled>Ingredients</option>
-                            <option value="Egg">Egg</option>
-                            <option value="Milk">Milk</option>
-                            <option value="Flour">Flour</option>
-                            <option value="Other">Other</option>
+                            {% for subject in ingredientsList %}
+                                <option value="{{ subject.name }}">{{ subject.name }} {{ subject.measure }}</option>
+                            {% endfor %}
                         </select>
                         <input type="number" name="amount" placeholder="Amount" required>
                     </li>
                 </ul>
             </div>
-            <div class="search-form" id="addRemButtons">
-                <button type="button" id="addIngredients" onclick="addIngredient()">Add Another</button>
-                <button type="button" id="addIngredients" onclick="remIngredient()">Remove Field</button>
+            <div class="search-form">
+                <button type="button" onclick="addIngredient()">Add Another</button>
+                <button type="button" onclick="remIngredient()">Remove Field</button>
             </div>
-        </form>
-        <form>
+        </div>
+
+        <div class="instructionListField">
             <div class="search-form">
                 <ol id="instructionsForm">
                     <li id="inst">
-                        <textarea placeholder="Instruction" rows="5" cols="40"></textarea>
+                        <textarea placeholder="Instruction" rows="5" cols="40" name="instructionsList"></textarea>
                     </li>
                 </ol>
             </div>
-            <div class="search-form" id="addRemButtons">
-                <button type="button" id="addInstructions" onclick="addInstruction()">Add Another</button>
-                <button type="button" id="addInstructions" onclick="remInstruction()">Remove Field</button>
+            <div class="search-form">
+                <button type="button" onclick="addInstruction()">Add Another</button>
+                <button type="button" onclick="remInstruction()">Remove Field</button>
             </div>
-        </form>
-    </div>
-    <div class="search-form" id="createPage">
-        <button type="button" id="newIngredient" onclick="popUp()">Add Unlisted Ingredient</button>
+        </div>
+
+        <div class="cookTimeField">
+            Enter time required to cook (minutes): 
+            <input type="number" name="time">
+        </div>
+
+        <div class="difficultyField">
+            <input type="radio" name="diff" value="hard"><label>Hard</label>
+            <input type="radio" name="diff" value="medium"><label>Medium</label>
+            <input type="radio" name="diff" value="easy"><label>Easy</label>
+        </div>
+
         <button type="submit">Save</button>
-        <button type="button">Download</button>
-        <button type="button">Delete</button>
+    </form>
+
+    <div class="search-form" id="createPage">
+        <button type="button" onclick="popUp()">Add Unlisted Ingredient</button>
+        <button type="button" id="downloadBtn">Download</button>
+        <button type="button" onclick="clearForm()">Delete</button>
         <a href="{{ url_for('home') }}">
             <button type="button">Go Back</button>
         </a>
     </div>
-    <script src="/static/addField.js"></script>
-</body>
 
+    <script src="/static/addField.js"></script>
+    <script>
+        document.querySelector("#downloadBtn").addEventListener("click", function () {
+            const title = document.querySelector("input[name='recipeName']").value;
+            const ingredients = Array.from(document.querySelectorAll("select[name='ingredientNames']")).map((s, i) => {
+                const amt = document.querySelectorAll("input[name='amount']")[i].value;
+                return `${s.value}: ${amt}`;
+            });
+
+            const instructions = Array.from(document.querySelectorAll("textarea[name='instructionsList']")).map((t, i) => {
+                return `${i + 1}. ${t.value}`;
+            });
+
+            const content = `Title: ${title}\n\nIngredients:\n${ingredients.join("\n")}\n\nInstructions:\n${instructions.join("\n")}`;
+            const blob = new Blob([content], { type: "text/plain" });
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = `${title || 'recipe'}.txt`;
+            a.click();
+        });
+    </script>
+    <script>
+        function clearForm() {
+            // Clear text inputs
+            document.querySelector("input[name='recipeName']").value = "";
+            document.querySelector("input[name='time']").value = "";
+    
+            // Uncheck radio buttons
+            document.querySelectorAll("input[name='cuisineType'], input[name='diff']").forEach(radio => radio.checked = false);
+    
+            // it will reset ingredient field
+            const ingrForm = document.getElementById("ingredientsForm");
+            const ingrItems = ingrForm.querySelectorAll("li");
+            for (let i = ingrItems.length - 1; i > 0; i--) ingrItems[i].remove();
+            ingrItems[0].querySelector("select").selectedIndex = 0;
+            ingrItems[0].querySelector("input").value = "";
+    
+            // This will Reset instruction field
+            const instForm = document.getElementById("instructionsForm");
+            const instItems = instForm.querySelectorAll("li");
+            for (let i = instItems.length - 1; i > 0; i--) instItems[i].remove();
+            instItems[0].querySelector("textarea").value = "";
+        }
+    </script>
+    
+</body>
 </html>

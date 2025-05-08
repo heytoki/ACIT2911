@@ -1,9 +1,7 @@
 # manage.py
-# Just to add sample data into our databse and manage it for testing
 from db import db
-from models import Recipe, Ingredient
+from models import Recipe, Ingredient, Reqs
 from app import app
-import json
 
 def drop_all():
     db.drop_all()
@@ -28,9 +26,36 @@ def add_recipes():
             "cuisine": "American",
             "cook_time": 15,
             "difficulty": "Easy"
+        },
+        "Chicken Curry": {
+            "instructions": "1. Sauté onions\n2. Add spices and chicken\n3. Simmer with coconut milk",
+            "ingredients": ["Chicken", "Onions", "Spices", "Coconut milk"],
+            "cuisine": "Indian",
+            "cook_time": 40,
+            "difficulty": "Hard"
+        },
+        "Sushi Rolls": {
+            "instructions": "1. Prepare rice\n2. Add fillings\n3. Roll and slice",
+            "ingredients": ["Sushi rice", "Nori", "Fish", "Vegetables"],
+            "cuisine": "Japanese",
+            "cook_time": 50,
+            "difficulty": "Hard"
+        },
+        "Tacos": {
+            "instructions": "1. Prepare fillings\n2. Heat tortillas\n3. Assemble tacos",
+            "ingredients": ["Tortillas", "Beef", "Lettuce", "Cheese"],
+            "cuisine": "Mexican",
+            "cook_time": 25,
+            "difficulty": "Medium"
+        },
+        "Greek Salad": {
+            "instructions": "1. Chop vegetables\n2. Add feta and olives\n3. Drizzle with olive oil",
+            "ingredients": ["Tomatoes", "Cucumber", "Feta", "Olives", "Olive oil"],
+            "cuisine": "Greek",
+            "cook_time": 10,
+            "difficulty": "Easy"
         }
     }
-
 
     for title, data in sample_data.items():
         recipe = Recipe(
@@ -44,19 +69,24 @@ def add_recipes():
         db.session.commit()
 
         for item in data["ingredients"]:
-            db.session.add(Ingredient(name=item, recipe_id=recipe.id))
+            ingredient = Ingredient.query.filter_by(name=item).first()
+            if not ingredient:
+                ingredient = Ingredient(name=item, measure="unit")
+                db.session.add(ingredient)
+                db.session.commit()
+
+            req = Reqs(recipe_id=recipe.id, ingredient_id=ingredient.id, qty=1)
+            db.session.add(req)
         db.session.commit()
-
-
 
     print("Sample recipes added")
 
 def clear_recipes():
-    Ingredient.query.delete()
-    Recipe.query.delete()
+    db.session.query(Reqs).delete()
+    db.session.query(Ingredient).delete()
+    db.session.query(Recipe).delete()
     db.session.commit()
-    print("All recipes and ingredients deleted.")
-
+    print("All recipes, ingredients, and requirements deleted.")
 
 if __name__ == "__main__":
     with app.app_context():
@@ -72,4 +102,3 @@ if __name__ == "__main__":
             create_all()
         else:
             print("Invalid command")
-

@@ -6,52 +6,93 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1 id="pageHeader"><img class="logo" src="/static/temp.jpg">NotYourMamasRecipe</h1>
-    <nav class="navbar">
-        <form class="search-form" action="/recipes" method="GET">
-            <input type="text" name="query" placeholder="Search recipes...">
-            <select name="filter">
-                <option value="">All</option>
-                <option value="vegan">Vegan</option>
-                <option value="dessert">Dessert</option>
-            </select>
-            <button type="submit">Search</button>
-        </form>
-        <ul class="nav-links">
-            <li><a href="/recipes/create" class="btn-create">Create Recipe</a></li>
-            <li><a href="#">Explore Recipes</a></li>
-        </ul>
-    </nav>
+    <header class="header">
+        <div class="header-top">
+            <img class="logo" src="/static/chef.jpg" alt="Logo">
+            <div class="title">CreateYourRecipe.com</div>
+        </div>
+    
+        <nav class="navbar">
+            <form class="search-form" action="/recipes" method="GET">
+                <input type="text" name="query" placeholder="Search recipes...">
+                <select name="filterType">
+                    <option value="title">Recipe Name</option>
+                    <option value="cuisineTypes">Cuisine</option>
+                    <option value="time">Cook Time</option>
+                    <option value="diff">Difficulty</option>
+                </select>
+                <select name="cuisineTypes" class="hidden">
+                    <option></option>
+                    <option value="italian">Italian</option>
+                    <option value="chinese">Chinese</option>
+                    <option value="thai">Thai</option>
+                    <option value="indian">Indian</option>
+                    <option value="french">French</option>
+                    <option value="japanese">Japanese</option>
+                    <option value="mexican">Mexican</option>
+                    <option value="other">Other</option>
+                </select>
+                <div id="cookTimeEl" class="hidden">
+                    Cooking Time (minutes) or Less: 
+                    <input type="number" name="time">
+                </div>
+                <select name="diff" class="hidden">
+                    <option></option>
+                    <option value="hard">Hard</option>
+                    <option value="medium">Medium</option>
+                    <option value="easy">Easy</option>
+                </select>
+                <button type="submit">Search</button>
+            </form>
+            <ul class="nav-links">
+                <li><a href="/recipes/create" class="nav-button">Create Recipe</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <script src="/static/homeFilter.js"></script>  
+
+    <!-- Flash message -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class="flashes">
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    {% endwith %}
+
     <div class="recipe-list">
         {% for recipe in recipes %}
-            <div class="recipe-card">
-                <h2>{{ recipe.title }}</h2>
+        <div class="recipe-card">
+            <h2>{{ recipe.title }}</h2>
 
-                {% if recipe.difficulty %}
-                <p> Recipe Difficulty: {{ recipe.difficulty }}</p>
-                {% endif %}
+            {% if recipe.difficulty %}
+                <p>Recipe Difficulty: {{ recipe.difficulty }}</p>
+            {% endif %}
 
-                {% if recipe.cuisine %}
-                <p>Cuisine:  {{ recipe.cuisine }}</p>
-                {% endif %}
+            {% if recipe.cuisine %}
+                <p>Cuisine: {{ recipe.cuisine }}</p>
+            {% endif %}
 
-                {% if recipe.instructions %}
-                    <h3>Instructions</h3>
-                    <p>{{ recipe.instructions }}</p>
-                {% endif %}
+            {% if recipe.instructions %}
+                <h3>Instructions</h3>
+                <p class="instructions">{{ recipe.instructions }}</p>
+            {% endif %}
 
-                {% if recipe.cook_time %}
-                <p> Recipe Cook Time: {{ recipe.cook_time }}</p>
-                {% endif %}
+            {% if recipe.cook_time %}
+                <p>Recipe Cook Time: {{ recipe.cook_time }}</p>
+            {% endif %}
 
-
-
-
-            </div>
+            <!-- Delete Button -->
+            <form action="{{ url_for('delete_recipe', id=recipe.id) }}" method="POST">
+                <button type="submit" onclick="return confirm('Are you sure you want to delete this recipe?');">Delete</button>
+            </form>
+        </div>
         {% else %}
             <p>No recipes found.</p>
         {% endfor %}
     </div>
-    
 </body>
 </html>
