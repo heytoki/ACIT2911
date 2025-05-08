@@ -6,6 +6,24 @@
     <title>Recipe</title>
 </head>
 <body>
-    <h1>Recipe</h1>
+    <div class="recipe-card">
+        <h2>{{ recipe.title }}</h2>
+
+        {% if recipe.difficulty %}
+            <p>Recipe Difficulty: {{ recipe.difficulty }}</p>
+        {% endif %}
+
+        {% if recipe.cuisine %}
+            <p>Cuisine: {{ recipe.cuisine }}</p>
+        {% endif %}
+
+        {% if recipe.instructions %}
+            <h3>Instructions</h3>
+            <p class="instructions">{{ recipe.instructions }}</p>
+        {% endif %}
+
+        {% if recipe.cook_time %}
+            <p>Recipe Cook Time: {{ recipe.cook_time }}</p>
+        {% endif %}
 </body>
 </html>

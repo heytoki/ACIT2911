@@ -22,7 +22,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 30px;
+    padding: 20px 30px;
     border-bottom: 2px solid rgb(0, 0, 0);
 }
 
@@ -167,6 +167,15 @@ body {
     border: 0.5px solid rgb(0, 0, 0);
 }
 
+.recipe-card > a, .recipe-card > a:visited {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 3px;
+    border: 1px solid white;
+}
+
 .recipe-card h2 {
     margin: 0;
     font-size: 1.5rem;
@@ -187,6 +196,19 @@ body {
     list-style-type: none;
 }
 
+
+#pageHeader {
+    display: flex;
+    justify-content: center;
+    color: white;
+    background-color: #130679;
+    padding-bottom: 30px;
+    padding-top: 30px;
+    width: 30%;
+
+
+}
+
 .grid {
     display: grid;
     grid-template-areas:
@@ -194,7 +216,7 @@ body {
         "ing ins"
         "time diff";
     grid-template-columns: 1fr 1fr;
-    background-color: lightblue;
+    background-color: #130679;
 }
 
 .grid > div.ingredientListField {
@@ -255,6 +277,7 @@ textarea, textarea:focus {
     margin: 20px auto;
     max-width: 800px;
     text-align: center;
+    padding-top: 30px;
 }
 
 .flashes li {
