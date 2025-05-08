@@ -66,7 +66,7 @@
     <div class="recipe-list">
         {% for recipe in recipes %}
         <div class="recipe-card">
-            <h2>{{ recipe.title }}</h2>
+            <a href={{ url_for('recipe', id=recipe.id) }}>{{ recipe.title }}</a>
 
             {% if recipe.difficulty %}
                 <p>Recipe Difficulty: {{ recipe.difficulty }}</p>
@@ -74,11 +74,6 @@
 
             {% if recipe.cuisine %}
                 <p>Cuisine: {{ recipe.cuisine }}</p>
-            {% endif %}
-
-            {% if recipe.instructions %}
-                <h3>Instructions</h3>
-                <p class="instructions">{{ recipe.instructions }}</p>
             {% endif %}
 
             {% if recipe.cook_time %}

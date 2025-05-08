@@ -77,9 +77,10 @@ def create():
         ingredientsList = Ingredient.query.order_by(asc(Ingredient.name)).all()
         return render_template('create.html', ingredientsList=ingredientsList)
 
-@app.route('/recipes/recipe')
-def recipe():
-    return render_template('recipe.html')
+@app.route('/recipes/<int:id>')
+def recipe(id):
+    recipe = Recipe.query.get_or_404(id)
+    return render_template('recipe.html', recipe=recipe)
 
 @app.route('/ingredient', methods=['GET', 'POST'])
 def ingredient():
