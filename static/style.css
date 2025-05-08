@@ -187,6 +187,19 @@ body {
     list-style-type: none;
 }
 
+
+#pageHeader {
+    display: flex;
+    justify-content: center;
+    color: white;
+    background-color: #130679;
+    padding-bottom: 30px;
+    padding-top: 30px;
+    width: 30%;
+
+
+}
+
 .grid {
     display: grid;
     grid-template-areas:
@@ -194,7 +207,7 @@ body {
         "ing ins"
         "time diff";
     grid-template-columns: 1fr 1fr;
-    background-color: lightblue;
+    background-color: #130679;
 }
 
 .grid > div.ingredientListField {
