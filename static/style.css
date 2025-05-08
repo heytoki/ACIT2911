@@ -277,6 +277,7 @@ textarea, textarea:focus {
     margin: 20px auto;
     max-width: 800px;
     text-align: center;
+    padding-top: 30px;
 }
 
 .flashes li {
