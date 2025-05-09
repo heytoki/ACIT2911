@@ -196,16 +196,23 @@ body {
 }
 
 .recipe-card a {
-    font-size: 1.4rem;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    font-size: 1.5rem;
     font-weight: bold;
     color: #ffffff;
     text-decoration: none;
     border-bottom: 2px solid transparent;
-    transition: border-color 0.2s;
+    transition: color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+    padding: 5px 0;
 }
 
 .recipe-card a:hover {
+    color: #ffffff;
     border-color: #ffffff;
+    background-color: #130679;
+    transform: scale(1.02);
 }
 
 .recipe-card > a, .recipe-card > a:visited {
