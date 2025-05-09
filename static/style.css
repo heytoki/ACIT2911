@@ -165,6 +165,28 @@ body {
     max-width: 500px; 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
     border: 0.5px solid rgb(0, 0, 0);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.recipe-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.3);
+}
+
+.recipe-card a {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #ffffff;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s;
+}
+
+.recipe-card a:hover {
+    border-color: #ffffff;
 }
 
 .recipe-card > a, .recipe-card > a:visited {
@@ -184,6 +206,26 @@ body {
 .recipe-card p {
     font-size: 1rem;
     line-height: 1.5;
+    margin: 0;
+}
+
+.recipe-card form {
+    margin-top: auto;
+}
+
+.recipe-card button {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    background-color: #ffffff;
+    color: black;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.recipe-card button:hover {
+    background-color: #b3b3b3;
 }
 
 .recipe-card .instructions {
@@ -197,10 +239,9 @@ body {
 }
 
 .grid {
-    padding-top: 1%;
+    padding: 2rem;
     text-align: center;
-    margin: 1%;
-    border-radius: 5px;
+    border-radius: 10px;
     display: grid;
     grid-template-areas:
         "top cui"
@@ -208,6 +249,10 @@ body {
         "ing ins"
         "bot bot";
     grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 3rem auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .grid > div.ingredientListField {
@@ -243,12 +288,79 @@ body {
 }
 
 .grid > div {
-    border-radius: 5px;
-    background-color: #130679;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-    border: 0.5px solid white;
-    margin: 2px;
+    border-radius: 8px;
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+    color: #000;
+    padding: 1rem;
 }
+
+.grid button,
+#createPage button {
+    padding: 8px 16px;
+    background-color: #130679;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.grid button:hover,
+#createPage button:hover {
+    background-color: #2919a8;
+}
+
+input[type="text"] {
+    padding: 8px;
+    font-size: 1rem;
+    width: 90%;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+input[type="number"] {
+    padding: 8px;
+    font-size: 1rem;
+    width: 90%;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+select {
+    padding: 8px;
+    font-size: 1rem;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+textarea {
+    padding: 8px;
+    font-size: 1rem;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    resize: vertical;
+    min-height: 100px;
+}
+
+.section-title {
+    grid-column: span 2;
+    font-size: 1.2rem;
+    margin: 1rem 0 0.5rem;
+    color: #130679;
+}
+
 
 div.top > input:focus {
     outline: none;
@@ -294,4 +406,10 @@ textarea, textarea:focus {
     border-radius: 4px;
     font-weight: bold;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    animation: fadein 0.4s ease;
+}
+
+@keyframes fadein {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
