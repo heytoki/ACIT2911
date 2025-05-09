@@ -22,6 +22,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 10px;
     padding: 20px 30px;
     border-bottom: 2px solid rgb(0, 0, 0);
 }
@@ -37,8 +38,8 @@ body {
 }
 
 .logo {
-    height: 40px;
-    width: 40px;
+    height: 60px;
+    width: 60px;
     border-radius: 10px;
 }
 
@@ -170,7 +171,7 @@ body {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-    padding: 4rem 6rem;
+    padding: 6rem 6rem 4rem;
     justify-items: center;
 }
 
@@ -413,13 +414,13 @@ textarea, textarea:focus {
     margin: 20px auto;
     max-width: 800px;
     text-align: center;
-    padding-top: 30px;
+    padding-top: 65px;
 }
 
 .flashes li {
     background-color: #4CAF50; /* green */
     color: white;
-    padding: 12px;
+    padding: 20px;
     margin-bottom: 10px;
     border-radius: 4px;
     font-weight: bold;
