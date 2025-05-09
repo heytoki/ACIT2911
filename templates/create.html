@@ -10,8 +10,10 @@
 <body>
     <header class="header">
         <div class="header-top">
-            <img class="logo" src="/static/chef.jpg" alt="Logo">
-            <div class="title">CreateYourRecipe.com</div>
+            <a href="{{ url_for('home') }}" class = "home-link">
+                <img class="logo" src="/static/chef.jpg" alt="Logo">
+                <div class="title">CreateYourRecipe.com</div>
+            </a>    
         </div>
         <nav class="navbar">
             Create your Recipe!
