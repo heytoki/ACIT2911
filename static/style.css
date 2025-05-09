@@ -71,6 +71,16 @@ body {
     border-radius: 4px;
 }
 
+.search-form input[type="text"] {
+    width: 400px;
+}
+
+.search-form select[name="filterType"] {
+    width: 150px;
+}
+
+
+
 .search-form select {
     padding: 8px;
     font-size: 1rem;
