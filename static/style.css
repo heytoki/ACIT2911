@@ -79,8 +79,6 @@ body {
     width: 150px;
 }
 
-
-
 .search-form select {
     padding: 8px;
     font-size: 1rem;
@@ -104,6 +102,16 @@ body {
 
 .search-form button:hover {
     background-color: #f0f0f0;
+}
+
+.home-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.home-link:hover .title {
+    text-decoration: underline;
 }
 
 .nav-links {
