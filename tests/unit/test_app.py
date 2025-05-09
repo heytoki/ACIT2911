@@ -2,9 +2,8 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 from app import app
-from unittest.mock import patch
 import pytest
-from searchRecipe import searchFunc
+from models import Recipe, Ingredient, Reqs
 
 # test homepage, ensure it has test recipe name in it
 def test_homepage_accessible():
@@ -14,8 +13,6 @@ def test_homepage_accessible():
     assert res.status_code == 200
     assert b'Pancakes' in res.data
 
-
-from models import Recipe, Ingredient, Reqs
 
 def test_new_recipe():
     """
