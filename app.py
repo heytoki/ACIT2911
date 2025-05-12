@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from pathlib import Path
 from db import db
-from models import Recipe, Ingredient, Reqs
+from models import Recipe, Ingredient, Reqs, Comments
 from sqlalchemy import asc
 from utils import save_instructions_to_json
 import searchRecipe as s
@@ -30,7 +30,6 @@ def list():
     param = request.args.get(filterType)
     print(param, filterType)
     recipes = s.searchFunc(request.args.get('query'), filterType, param)
-    print(recipes)
     return render_template('list.html', recipes=recipes)
 
 @app.route('/recipes/create', methods=['GET', 'POST'])
@@ -79,10 +78,21 @@ def create():
         ingredientsList = Ingredient.query.order_by(asc(Ingredient.name)).all()
         return render_template('create.html', ingredientsList=ingredientsList)
 
-@app.route('/recipes/<int:id>')
+@app.route('/recipes/<int:id>', methods=['GET', 'POST'])
 def recipe(id):
     recipe = Recipe.query.get_or_404(id)
-    return render_template('recipe.html', recipe=recipe)
+    if request.method == 'POST':
+        author = request.form.get('author')
+        commentPost = request.form.getlist('commentPost')
+        commentPost = '\n'.join(commentPost)
+        comment = Comments(author=author, commentPost=commentPost)
+        db.session.add(comment)
+        db.session.commit()
+        commentList = Comments.query.limit(10)
+        return render_template('recipe.html', recipe=recipe, commentList=commentList)
+    if request.method == 'GET':
+        commentList = Comments.query.limit(10)
+        return render_template('recipe.html', recipe=recipe, commentList=commentList)
 
 @app.route('/ingredient', methods=['GET', 'POST'])
 def ingredient():

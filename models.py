@@ -17,3 +17,8 @@ class Reqs(db.Model):
     recipe_id = db.Column(db.Integer, db.ForeignKey('recipe.id'), primary_key=True)
     ingredient_id = db.Column(db.Integer, db.ForeignKey('ingredient.id'), primary_key=True)
     qty = db.Column(db.Integer)
+
+class Comments(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    author = db.Column(db.String(100), nullable=False)
+    commentPost = db.Column(db.String(), nullable=False)
