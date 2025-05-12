@@ -20,5 +20,6 @@ class Reqs(db.Model):
 
 class Comments(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipe.id'))
     author = db.Column(db.String(100), nullable=False)
     commentPost = db.Column(db.String(), nullable=False)

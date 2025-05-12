@@ -85,13 +85,13 @@ def recipe(id):
         author = request.form.get('author')
         commentPost = request.form.getlist('commentPost')
         commentPost = '\n'.join(commentPost)
-        comment = Comments(author=author, commentPost=commentPost)
+        comment = Comments(author=author, commentPost=commentPost, recipe_id=id)
         db.session.add(comment)
         db.session.commit()
-        commentList = Comments.query.limit(10)
+        commentList = Comments.query.filter(Comments.recipe_id == id).limit(10)
         return render_template('recipe.html', recipe=recipe, commentList=commentList)
     if request.method == 'GET':
-        commentList = Comments.query.limit(10)
+        commentList = Comments.query.filter(Comments.recipe_id == id).limit(10)
         return render_template('recipe.html', recipe=recipe, commentList=commentList)
 
 @app.route('/ingredient', methods=['GET', 'POST'])
