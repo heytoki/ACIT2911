@@ -80,7 +80,10 @@ def create():
 
 @app.route('/recipes/<int:id>', methods=['GET', 'POST'])
 def recipe(id):
-    recipe = Recipe.query.get_or_404(id)
+    recipe = db.session.get(Recipe, id)
+    if not recipe:
+        return "Recipe not found", 404
+
     if request.method == 'POST':
         author = request.form.get('author')
         commentPost = request.form.getlist('commentPost')
@@ -109,7 +112,10 @@ def ingredient():
 
 @app.route('/recipes/delete/<int:id>', methods=['POST'])
 def delete_recipe(id):
-    recipe = Recipe.query.get_or_404(id)
+    recipe = db.session.get(Recipe, id)
+    if not recipe:
+        return "Recipe not found", 404
+
 
     # Delete any ingredient-recipe associations in Reqs
     Reqs.query.filter_by(recipe_id=id).delete()
