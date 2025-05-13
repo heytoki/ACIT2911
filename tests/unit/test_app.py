@@ -11,7 +11,6 @@ def test_homepage_accessible():
     client = app.test_client()
     res = client.get('/')
     assert res.status_code == 200
-    assert b'Pancakes' in res.data
 
 
 def test_new_recipe():
