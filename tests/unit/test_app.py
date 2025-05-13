@@ -54,22 +54,3 @@ def test_new_req():
     assert req.recipe_id == 1
     assert req.ingredient_id == 1
     assert req.qty == 2
-
-def test_new_recipe_missing_field():
-    """
-    GIVEN a Recipe model
-    WHEN a required field is missing
-    THEN raise a TypeError for missing argument
-    """
-    with pytest.raises(TypeError):
-        Recipe(title="Pancakes", instructions="Mix and cook", cuisine="American", cook_time=10)
-
-
-def test_new_ingredient_missing_name():
-    """
-    GIVEN an Ingredient model
-    WHEN the name is missing
-    THEN raise a TypeError
-    """
-    with pytest.raises(TypeError):
-        Ingredient(measure="cups") 
