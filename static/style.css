@@ -358,6 +358,10 @@ input[type="number"] {
     margin-bottom: 10px;
 }
 
+input:focus {
+    outline: none;
+}
+
 select {
     padding: 8px;
     font-size: 1rem;

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recipe</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="recipe-card">
@@ -25,5 +26,24 @@
         {% if recipe.cook_time %}
             <p>Recipe Cook Time: {{ recipe.cook_time }}</p>
         {% endif %}
+        <div class="commentSection">
+            <form method="POST" action="">
+                <input type="text" placeholder="Name" name="author" required>
+                <textarea rows="3" cols="40" placeholder="Comment Here" style="width: 90%;" name="commentPost" required></textarea>
+                <button type="submit">➤</button>
+            </form>
+        </div>
+
+        {% for comment in commentList %}
+            {% if comment.author %}
+                <h3 class="commentAuthor">{{ comment.author }}</h3>
+            {% endif %}
+            {% if comment.commentPost %}
+                <p class="commentBody">{{ comment.commentPost }}</p>
+            {% endif %}
+        {% else %}
+            <p>No Comments!</p>
+        {% endfor %}
+    </div>
 </body>
 </html>
