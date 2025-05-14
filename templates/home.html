@@ -18,7 +18,7 @@
 
         <nav class="navbar">
             <form class="search-form" action="/recipes" method="GET">
-                <input type="text" name="query" placeholder="Search recipes...">
+                <input type="text" name="query" placeholder="Search recipes..." style="width: 15%;">
                 <select name="filterType">
                     <option value="title">Recipe Name</option>
                     <option value="cuisineTypes">Cuisine</option>
@@ -37,8 +37,8 @@
                     <option value="other">Other</option>
                 </select>
                 <div id="cookTimeEl" class="hidden">
-                    <input type="number" name="time" min="1" max="9999" placeholder="Cooking Time (minutes) or less"
-                        style="width: 200px;">
+                    <input type="number" name="time" min="1" max="9999" placeholder="Max Cooking Time (min)"
+                        style="width: 150px;">
                 </div>
                 <select name="diff" class="hidden" style="width: auto;">
                     <option disabled></option>
