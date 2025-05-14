@@ -24,7 +24,7 @@ function addInstruction() {
 function remInstruction() {
     var element = document.getElementById('instructionsForm');
     var nested = element.getElementsByTagName('li');
-    if(nested.length > 1){
+    if (nested.length > 1) {
         element.removeChild(nested[nested.length - 1]);
     }
 }
@@ -32,12 +32,12 @@ function remInstruction() {
 function remIngredient() {
     var element = document.getElementById('ingredientsForm');
     var nested = element.getElementsByTagName('li');
-    if(nested.length > 1){
+    if (nested.length > 1) {
         element.removeChild(nested[nested.length - 1]);
     }
 }
 
-function popUp(){
+function popUp() {
     window.open(
         '/ingredient',
         '_blank'
