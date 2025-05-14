@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    padding-top: 120px;
+    padding-top: 160px;
     background-color: white;
     font-family: Arial, sans-serif;
     color: white;
@@ -222,6 +222,13 @@ body {
     font-size: 15px;
     padding: 3px;
     border: 1px solid white;
+    
+}
+
+.recipe-card-container {
+    display: flex;
+    justify-content: center;
+    padding: 3rem 1rem;
 }
 
 .recipe-card h2 {
@@ -442,4 +449,37 @@ textarea, textarea:focus {
 @keyframes fadein {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+/* Comment styling below */
+
+.commentContainer {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.commentCard {
+    background-color: #f4f4f4;
+    color: #000;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    border: 1px solid #ccc;
+    animation: fadein 0.5s ease-in-out;
+}
+
+.commentAuthor {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-top: 0;
+    margin-bottom: 0.3rem;
+    color: #130679;
+}
+
+.commentBody {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.4;
 }
