@@ -73,7 +73,6 @@ def create():
         flash(f"Recipe '{title}' created successfully!")
         return redirect(url_for('home'))
 
-
     if request.method == 'GET':
         ingredientsList = Ingredient.query.order_by(asc(Ingredient.name)).all()
         return render_template('create.html', ingredientsList=ingredientsList)
@@ -101,7 +100,7 @@ def ingredient():
 
     if request.method == 'POST':
         name = request.form.get('name')
-        measure = request.form.to_dict()['measures']
+        measure = request.form.to_dict().get('measures')
         ingredient = Ingredient(name=name, measure=measure)
         db.session.add(ingredient)
         db.session.commit()
