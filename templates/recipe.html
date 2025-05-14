@@ -7,7 +7,19 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="recipe-card">
+    <header class="header">
+    <div class="header-top">
+        <a href="{{ url_for('home') }}" class="home-link">
+        <img class="logo" src="/static/chef.jpg" alt="Logo">
+        <div class="title">CreateYourRecipe.com</div>
+        </a>
+    </div>
+        <nav class="navbar">
+            Viewing Recipe
+        </nav>
+    </header>
+    <div class="recipe-card-container">
+        <div class="recipe-card">
         <h2>{{ recipe.title }}</h2>
 
         {% if recipe.difficulty %}
@@ -33,17 +45,21 @@
                 <button type="submit">➤</button>
             </form>
         </div>
-
-        {% for comment in commentList %}
-            {% if comment.author %}
-                <h3 class="commentAuthor">{{ comment.author }}</h3>
-            {% endif %}
-            {% if comment.commentPost %}
-                <p class="commentBody">{{ comment.commentPost }}</p>
-            {% endif %}
-        {% else %}
-            <p>No Comments!</p>
-        {% endfor %}
+        <div class = "commentContainer">
+            {% for comment in commentList %}
+                <div class = "commentCard">
+                {% if comment.author %}
+                    <h3 class="commentAuthor">{{ comment.author }}</h3>
+                {% endif %}
+                {% if comment.commentPost %}
+                    <p class="commentBody">{{ comment.commentPost }}</p>
+                {% endif %}
+                </div>
+            {% else %}
+                <p>No Comments!</p>
+            {% endfor %}
+        </div>
+    </div>
     </div>
 </body>
 </html>
