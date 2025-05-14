@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Recipes</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
+
 <body>
     <header class="header">
         <div class="header-top">
-            <a href="{{ url_for('home') }}" class = "home-link">
+            <a href="{{ url_for('home') }}" class="home-link">
                 <img class="logo" src="/static/chef.jpg" alt="Logo">
                 <div class="title">CreateYourRecipe.com</div>
-            </a>    
+            </a>
         </div>
-    
+
         <nav class="navbar">
             <form class="search-form" action="/recipes" method="GET">
                 <input type="text" name="query" placeholder="Search recipes...">
@@ -23,8 +25,8 @@
                     <option value="time">Cook Time</option>
                     <option value="diff">Difficulty</option>
                 </select>
-                <select name="cuisineTypes" class="hidden">
-                    <option></option>
+                <select name="cuisineTypes" class="hidden" style="width: auto;">
+                    <option disabled></option>
                     <option value="italian">Italian</option>
                     <option value="chinese">Chinese</option>
                     <option value="thai">Thai</option>
@@ -35,11 +37,11 @@
                     <option value="other">Other</option>
                 </select>
                 <div id="cookTimeEl" class="hidden">
-                    Cooking Time (minutes) or Less: 
-                    <input type="number" name="time">
+                    <input type="number" name="time" min="1" max="9999" placeholder="Cooking Time (minutes) or less"
+                        style="width: 200px;">
                 </div>
-                <select name="diff" class="hidden">
-                    <option></option>
+                <select name="diff" class="hidden" style="width: auto;">
+                    <option disabled></option>
                     <option value="hard">Hard</option>
                     <option value="medium">Medium</option>
                     <option value="easy">Easy</option>
@@ -52,16 +54,16 @@
         </nav>
     </header>
 
-    <script src="/static/homeFilter.js"></script>  
+    <script src="/static/homeFilter.js"></script>
 
     <!-- Flash message -->
     {% with messages = get_flashed_messages() %}
     {% if messages %}
-      <ul class="flashes">
+    <ul class="flashes">
         {% for message in messages %}
-          <li>{{ message }}</li>
+        <li>{{ message }}</li>
         {% endfor %}
-      </ul>
+    </ul>
     {% endif %}
     {% endwith %}
 
@@ -71,25 +73,27 @@
             <a href={{ url_for('recipe', id=recipe.id) }}>{{ recipe.title }}</a>
 
             {% if recipe.difficulty %}
-                <p>Recipe Difficulty: {{ recipe.difficulty }}</p>
+            <p>Recipe Difficulty: {{ recipe.difficulty }}</p>
             {% endif %}
 
             {% if recipe.cuisine %}
-                <p>Cuisine: {{ recipe.cuisine }}</p>
+            <p>Cuisine: {{ recipe.cuisine }}</p>
             {% endif %}
 
             {% if recipe.cook_time %}
-                <p>Recipe Cook Time: {{ recipe.cook_time }}</p>
+            <p>Recipe Cook Time: {{ recipe.cook_time }}</p>
             {% endif %}
 
             <!-- Delete Button -->
             <form action="{{ url_for('delete_recipe', id=recipe.id) }}" method="POST">
-                <button type="submit" onclick="return confirm('Are you sure you want to delete this recipe?');">Delete</button>
+                <button type="submit"
+                    onclick="return confirm('Are you sure you want to delete this recipe?');">Delete</button>
             </form>
         </div>
         {% else %}
-            <p>No recipes found.</p>
+        <p>No recipes found.</p>
         {% endfor %}
     </div>
 </body>
+
 </html>
