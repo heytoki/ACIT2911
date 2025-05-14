@@ -37,7 +37,7 @@
 
         <div class="cookTimeField">
             Enter time required to cook (minutes):
-            <input type="number" name="time" required>
+            <input type="number" name="time" required min="1" max="9999">
         </div>
 
         <div class="difficultyField">
@@ -56,7 +56,7 @@
                             <option value="{{ subject.name }}">{{ subject.name }} {{ subject.measure }}</option>
                             {% endfor %}
                         </select>
-                        <input type="number" name="amount" placeholder="Amount" required>
+                        <input type="number" name="amount" placeholder="Amount" required min="1" max="9999">
                     </li>
                 </ul>
             </div>
