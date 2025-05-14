@@ -70,11 +70,11 @@ def _create_test_data():
     
     # Create recipe-ingredient relationships
     requirements = [
-        Reqs(recipe_id=1, ingredient_id=1, qty=3),  # Tomatoes for pasta
-        Reqs(recipe_id=1, ingredient_id=2, qty=200),  # Pasta
-        Reqs(recipe_id=1, ingredient_id=3, qty=2),  # Garlic for pasta
-        Reqs(recipe_id=2, ingredient_id=3, qty=4),  # Garlic for bread
-        Reqs(recipe_id=2, ingredient_id=5, qty=2)   # Olive oil for bread
+        Reqs(recipe_id=1, ingredient_id=1, qty=3),
+        Reqs(recipe_id=1, ingredient_id=2, qty=200),
+        Reqs(recipe_id=1, ingredient_id=3, qty=2),
+        Reqs(recipe_id=2, ingredient_id=3, qty=4),
+        Reqs(recipe_id=2, ingredient_id=5, qty=2)
     ]
     
     for req in requirements:
