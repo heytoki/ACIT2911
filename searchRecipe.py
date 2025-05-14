@@ -3,7 +3,8 @@ from sqlalchemy import and_
 def searchFunc(query, filterType, param):
     if filterType == 'title':
         return Recipe.query.filter(Recipe.title.like('%'+query+'%')).all()
-    if filterType == 'cuisine':
+    
+    if filterType == 'cuisineTypes':
         if param == 'italian':
             return Recipe.query.filter(and_(
                 Recipe.title.like('%'+query+'%'),
@@ -43,13 +44,16 @@ def searchFunc(query, filterType, param):
             return Recipe.query.filter(and_(
                 Recipe.title.like('%'+query+'%'),
                 Recipe.cuisine.like('other')
-            )).all()        
-        
+            )).all()
+
     if filterType == 'time':
-        return Recipe.query.filter(and_(
+        if param:
+            return Recipe.query.filter(and_(
                 Recipe.title.like('%'+query+'%'),
                 Recipe.cook_time <= param
-        )).all()
+            )).all()
+        else:
+            return Recipe.query.filter(Recipe.title.like('%'+query+'%')).all()
 
     if filterType == 'diff':
         if param == 'hard':
@@ -65,5 +69,5 @@ def searchFunc(query, filterType, param):
         if param == 'easy':
             return Recipe.query.filter(and_(
                 Recipe.title.like('%'+query+'%'),
-                Recipe.difficulty.like('medium')
-            )).all()  
+                Recipe.difficulty.like('easy')
+            )).all()

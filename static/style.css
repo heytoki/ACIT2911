@@ -22,7 +22,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 30px;
+    gap: 10px;
+    padding: 20px 30px;
     border-bottom: 2px solid rgb(0, 0, 0);
 }
 
@@ -37,8 +38,8 @@ body {
 }
 
 .logo {
-    height: 40px;
-    width: 40px;
+    height: 60px;
+    width: 60px;
     border-radius: 10px;
 }
 
@@ -71,6 +72,14 @@ body {
     border-radius: 4px;
 }
 
+.search-form input[type="text"] {
+    width: 400px;
+}
+
+.search-form select[name="filterType"] {
+    width: 150px;
+}
+
 .search-form select {
     padding: 8px;
     font-size: 1rem;
@@ -94,6 +103,16 @@ body {
 
 .search-form button:hover {
     background-color: #f0f0f0;
+}
+
+.home-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.home-link:hover .title {
+    text-decoration: underline;
 }
 
 .nav-links {
@@ -152,7 +171,7 @@ body {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-    padding: 4rem 6rem;
+    padding: 6rem 6rem 4rem;
     justify-items: center;
 }
 
@@ -165,6 +184,44 @@ body {
     max-width: 500px; 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
     border: 0.5px solid rgb(0, 0, 0);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.recipe-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.3);
+}
+
+.recipe-card a {
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffffff;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+    padding: 5px 0;
+}
+
+.recipe-card a:hover {
+    color: #ffffff;
+    border-color: #ffffff;
+    background-color: #130679;
+    transform: scale(1.02);
+}
+
+.recipe-card > a, .recipe-card > a:visited {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 3px;
+    border: 1px solid white;
 }
 
 .recipe-card h2 {
@@ -175,6 +232,26 @@ body {
 .recipe-card p {
     font-size: 1rem;
     line-height: 1.5;
+    margin: 0;
+}
+
+.recipe-card form {
+    margin-top: auto;
+}
+
+.recipe-card button {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    background-color: #ffffff;
+    color: black;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.recipe-card button:hover {
+    background-color: #b3b3b3;
 }
 
 .recipe-card .instructions {
@@ -188,13 +265,20 @@ body {
 }
 
 .grid {
+    padding: 2rem;
+    text-align: center;
+    border-radius: 10px;
     display: grid;
     grid-template-areas:
         "top cui"
+        "time diff"
         "ing ins"
-        "time diff";
+        "bot bot";
     grid-template-columns: 1fr 1fr;
-    background-color: lightblue;
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 3rem auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .grid > div.ingredientListField {
@@ -219,9 +303,94 @@ body {
 
 .grid > div.recipeNameField {
     grid-area: top;
-    text-align: center;
     padding-top: 5px;
 }
+
+.grid > button.saveBtn {
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 1%;
+    grid-area: bot;
+}
+
+.grid > div {
+    border-radius: 8px;
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+    color: #000;
+    padding: 1rem;
+}
+
+.grid button,
+#createPage button {
+    padding: 8px 16px;
+    background-color: #130679;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.grid button:hover,
+#createPage button:hover {
+    background-color: #2919a8;
+}
+
+input[type="text"] {
+    padding: 8px;
+    font-size: 1rem;
+    width: 90%;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+input[type="number"] {
+    padding: 8px;
+    font-size: 1rem;
+    width: 90%;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+input:focus {
+    outline: none;
+}
+
+select {
+    padding: 8px;
+    font-size: 1rem;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+textarea {
+    padding: 8px;
+    font-size: 1rem;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    resize: vertical;
+    min-height: 100px;
+}
+
+.section-title {
+    grid-column: span 2;
+    font-size: 1.2rem;
+    margin: 1rem 0 0.5rem;
+    color: #130679;
+}
+
 
 div.top > input:focus {
     outline: none;
@@ -248,6 +417,7 @@ textarea, textarea:focus {
 .hidden {
     display: none;
 }
+
 /* Flash message styles */
 .flashes {
     list-style-type: none;
@@ -255,14 +425,21 @@ textarea, textarea:focus {
     margin: 20px auto;
     max-width: 800px;
     text-align: center;
+    padding-top: 65px;
 }
 
 .flashes li {
     background-color: #4CAF50; /* green */
     color: white;
-    padding: 12px;
+    padding: 20px;
     margin-bottom: 10px;
     border-radius: 4px;
     font-weight: bold;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    animation: fadein 0.4s ease;
+}
+
+@keyframes fadein {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }

@@ -1,29 +1,30 @@
 let selector = document.getElementsByName('filterType')[0];
+
 selector.addEventListener("click", function(){
     let filterType = selector.value;
     
-    let cuisineType = document.getElementsByName('cuisineTypes')[0];
+    let cuisineType = document.getElementsByName('cuisineTypes');
     let time = document.getElementById('cookTimeEl');
-    let diff = document.getElementsByName('diff')[0];
+    let diff = document.getElementsByName('diff');
 
     if(filterType == 'title'){
         time.setAttribute('class', 'hidden');
-        diff.setAttribute('class', 'hidden');
-        cuisineType.setAttribute('class', 'hidden');
+        diff[0].setAttribute('class', 'hidden');
+        cuisineType[0].setAttribute('class', 'hidden');
     }
     if(filterType == 'cuisineTypes'){
-        cuisineType.removeAttribute('class');
+        cuisineType[0].removeAttribute('class');
         time.setAttribute('class', 'hidden');
-        diff.setAttribute('class', 'hidden');
+        diff[0].setAttribute('class', 'hidden');
     }
     if(filterType == 'time'){
         time.removeAttribute('class');
-        cuisineType.setAttribute('class', 'hidden');
-        diff.setAttribute('class', 'hidden');
+        cuisineType[0].setAttribute('class', 'hidden');
+        diff[0].setAttribute('class', 'hidden');
     }
     if(filterType == 'diff'){
-        diff.removeAttribute('class');
+        diff[0].removeAttribute('class');
         time.setAttribute('class', 'hidden');
-        cuisineType.setAttribute('class', 'hidden');
+        cuisineType[0].setAttribute('class', 'hidden');
     }
 });
