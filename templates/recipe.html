@@ -20,6 +20,7 @@
             Viewing Recipe
         </nav>
     </header>
+
     <div class="recipe-card-container">
         <div class="recipe-card">
             <h2>{{ recipe.title }}</h2>
@@ -40,14 +41,17 @@
             {% if recipe.cook_time %}
             <p>Recipe Cook Time: {{ recipe.cook_time }}</p>
             {% endif %}
+
+            <!-- Comment form where the user write the comment -->
             <div class="commentSection">
                 <form method="POST" action="">
                     <input type="text" placeholder="Name" name="author" required>
-                    <textarea rows="3" cols="40" placeholder="Comment Here" style="width: 90%;" name="commentPost"
-                        required></textarea>
+                    <textarea rows="3" cols="40" placeholder="Comment Here" style="width: 90%;" name="commentPost" required></textarea>
                     <button type="submit">➤</button>
                 </form>
             </div>
+
+            <!-- This will display Comments -->
             <div class="commentContainer">
                 {% for comment in commentList %}
                 <div class="commentCard">
@@ -57,11 +61,24 @@
                     {% if comment.commentPost %}
                     <p class="commentBody">{{ comment.commentPost }}</p>
                     {% endif %}
+                    <form method="POST" action="{{ url_for('delete_comment', comment_id=comment.id, recipe_id=recipe.id) }}">
+                        <button class="delete-btn" type="submit" onclick="return confirm('Delete this comment?')">Delete Comment</button>
+                    </form>
                 </div>
                 {% else %}
                 <p>No Comments!</p>
                 {% endfor %}
             </div>
+
+            <!-- Our reciepe delete button -->
+            <form method="POST" action="{{ url_for('delete_recipe', id=recipe.id) }}">
+                <button type="submit" class="delete-btn" onclick="return confirm('Delete this recipe?')">Delete Recipe</button>
+            </form>
+
+            <div style="margin-top: 1rem; display: flex; justify-content: center;">
+                <a href="{{ url_for('home') }}" class="go-back-btn">Go Back</a>
+            </div>
+
         </div>
     </div>
 </body>

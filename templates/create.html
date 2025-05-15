@@ -88,15 +88,15 @@
         <button type="button" onclick="popUp()">Add Unlisted Ingredient</button>
         <button type="button" id="downloadBtn">Download</button>
         <button type="button" onclick="clearForm()">Delete</button>
-        <a href="{{ url_for('home') }}">
-            <button type="button">Go Back</button>
-        </a>
     </div>
-
+    <a href="{{ url_for('home') }}" class="go-back-btn">Go Back</a>
     <script src="/static/addField.js"></script>
     <script>
         document.querySelector("#downloadBtn").addEventListener("click", function () {
             const title = document.querySelector("input[name='recipeName']").value;
+            if (!title.trim()) {
+                alert("Please enter a recipe name before downloading."); // stops user to download blank reciepe
+            }
             const ingredients = Array.from(document.querySelectorAll("select[name='ingredientNames']")).map((s, i) => {
                 const amt = document.querySelectorAll("input[name='amount']")[i].value;
                 return `${s.value}: ${amt}`;
