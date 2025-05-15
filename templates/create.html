@@ -10,10 +10,10 @@
 <body>
     <header class="header">
         <div class="header-top">
-            <a href="{{ url_for('home') }}" class = "home-link">
+            <a href="{{ url_for('home') }}" class="home-link">
                 <img class="logo" src="/static/chef.jpg" alt="Logo">
                 <div class="title">CreateYourRecipe.com</div>
-            </a>    
+            </a>
         </div>
         <nav class="navbar">
             Create your Recipe!
@@ -37,7 +37,7 @@
 
         <div class="cookTimeField">
             Enter time required to cook (minutes):
-            <input type="number" name="time" required>
+            <input type="number" name="time" required min="1" max="9999">
         </div>
 
         <div class="difficultyField">
@@ -56,7 +56,7 @@
                             <option value="{{ subject.name }}">{{ subject.name }} {{ subject.measure }}</option>
                             {% endfor %}
                         </select>
-                        <input type="number" name="amount" placeholder="Amount" required>
+                        <input type="number" name="amount" placeholder="Amount" required min="1" max="9999">
                     </li>
                 </ul>
             </div>
@@ -70,7 +70,8 @@
             <div class="search-form">
                 <ol id="instructionsForm">
                     <li id="inst">
-                        <textarea placeholder="Instruction" rows="5" cols="40" name="instructionsList" required></textarea>
+                        <textarea placeholder="Instruction" rows="5" cols="40" name="instructionsList"
+                            required></textarea>
                     </li>
                 </ol>
             </div>
@@ -87,15 +88,16 @@
         <button type="button" onclick="popUp()">Add Unlisted Ingredient</button>
         <button type="button" id="downloadBtn">Download</button>
         <button type="button" onclick="clearForm()">Delete</button>
-        <a href="{{ url_for('home') }}">
-            <button type="button">Go Back</button>
-        </a>
     </div>
-
+    <a href="{{ url_for('home') }}" class="go-back-btn">Go Back</a>
     <script src="/static/addField.js"></script>
     <script>
         document.querySelector("#downloadBtn").addEventListener("click", function () {
             const title = document.querySelector("input[name='recipeName']").value;
+            if (!title.trim()) {  // stops user to download blank reciepe
+                alert("Please enter a recipe name before downloading.");
+                return; 
+            }
             const ingredients = Array.from(document.querySelectorAll("select[name='ingredientNames']")).map((s, i) => {
                 const amt = document.querySelectorAll("input[name='amount']")[i].value;
                 return `${s.value}: ${amt}`;

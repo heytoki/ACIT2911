@@ -126,12 +126,18 @@ def create_app(config=None):
         except:
             pass
 
-        db.session.delete(recipe)
-        db.session.commit()
-        return redirect(url_for('home'))
-
-    return app
-
+    # Delete the recipe itself
+    db.session.delete(recipe)
+    db.session.commit()
+    flash("Recipe deleted successfully!") 
+    return redirect(url_for('home'))
+@app.route('/comments/delete/<int:comment_id>/<int:recipe_id>', methods=['POST'])
+def delete_comment(comment_id, recipe_id):
+    comment = Comments.query.get_or_404(comment_id)
+    db.session.delete(comment)
+    db.session.commit()
+    flash("Comment deleted.")
+    return redirect(url_for('recipe', id=recipe_id))
 if __name__ == '__main__':
     app = create_app()
     app.run(debug=True, port=5555)
