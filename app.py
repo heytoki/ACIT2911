@@ -126,7 +126,10 @@ def create_app(config=None):
 
     @app.route('/comments/delete/<int:comment_id>/<int:recipe_id>', methods=['POST'])
     def delete_comment(comment_id, recipe_id):
-        comment = Comments.query.get_or_404(comment_id)
+        comment = db.session.get(Comments, comment_id)
+        if not comment:
+            return "Comment not found", 404
+
         db.session.delete(comment)
         db.session.commit()
         flash("Comment deleted.")
