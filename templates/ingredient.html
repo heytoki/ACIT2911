@@ -16,7 +16,7 @@
         </div>
         <nav class="navbar">
             Add an unlisted ingredient:
-            <form class="search-form" method="POST" action="ingredient">
+           <form class="search-form" method="POST" action="{{ url_for('ingredient') }}">
                 <input type="text" name="name" placeholder="Ingredient Name" required>
                 <select name="measures" required>
                     <option value="weight">Weight</option>
@@ -30,6 +30,15 @@
             </form>
         </nav>
     </header>
+            {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class="flashes">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        <a href="{{ url_for('home') }}" class="go-back-btn">Go Back</a>
 </body>
-
 </html>
