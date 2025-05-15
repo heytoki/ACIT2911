@@ -94,8 +94,9 @@
     <script>
         document.querySelector("#downloadBtn").addEventListener("click", function () {
             const title = document.querySelector("input[name='recipeName']").value;
-            if (!title.trim()) {
-                alert("Please enter a recipe name before downloading."); // stops user to download blank reciepe
+            if (!title.trim()) {  // stops user to download blank reciepe
+                alert("Please enter a recipe name before downloading.");
+                return; 
             }
             const ingredients = Array.from(document.querySelectorAll("select[name='ingredientNames']")).map((s, i) => {
                 const amt = document.querySelectorAll("input[name='amount']")[i].value;
