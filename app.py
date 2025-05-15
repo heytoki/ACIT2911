@@ -83,8 +83,7 @@ def recipe(id):
     recipe = Recipe.query.get_or_404(id)
     if request.method == 'POST':
         author = request.form.get('author')
-        commentPost = request.form.getlist('commentPost')
-        commentPost = '\n'.join(commentPost)
+        commentPost = request.form.get('commentPost')
         comment = Comments(author=author, commentPost=commentPost, recipe_id=id)
         db.session.add(comment)
         db.session.commit()
@@ -128,7 +127,14 @@ def delete_recipe(id):
     # Delete the recipe itself
     db.session.delete(recipe)
     db.session.commit()
+    flash("Recipe deleted successfully!") 
     return redirect(url_for('home'))
-
+@app.route('/comments/delete/<int:comment_id>/<int:recipe_id>', methods=['POST'])
+def delete_comment(comment_id, recipe_id):
+    comment = Comments.query.get_or_404(comment_id)
+    db.session.delete(comment)
+    db.session.commit()
+    flash("Comment deleted.")
+    return redirect(url_for('recipe', id=recipe_id))
 if __name__ == '__main__':
     app.run(debug=True, port=5555)
