@@ -1,5 +1,5 @@
 # Specifies what files/folders we dont want to track with github
 __pycache__/
-/data/recipes.db
 /tests/unit/__pycache__
 instructions.json
+/data/recipes.db

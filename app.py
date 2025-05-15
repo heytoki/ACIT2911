@@ -5,135 +5,135 @@ from models import Recipe, Ingredient, Reqs, Comments
 from sqlalchemy import asc
 from utils import save_instructions_to_json
 import searchRecipe as s
+import json
 
-app = Flask(__name__)
-app.secret_key = "your_secret_key"  # Needed for flash messages
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///recipes.db"
+def create_app(config=None):
+    app = Flask(__name__)
+    app.secret_key = "your_secret_key"
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///recipes.db"
+    app.instance_path = Path("data").resolve()
 
-# database location in the data folder
-app.instance_path = Path("data").resolve()
+    if config:
+        app.config.update(config)
 
-db.init_app(app)
+    db.init_app(app)
 
-# Ensure tables are created
-with app.app_context():
-    db.create_all()
+    with app.app_context():
+        db.create_all()
 
-@app.route('/')
-def home():
-    recipes = Recipe.query.all()
-    return render_template('home.html', recipes=recipes)
+    @app.route('/')
+    def home():
+        recipes = Recipe.query.all()
+        return render_template('home.html', recipes=recipes)
 
-@app.route('/recipes')
-def list():
-    filterType = request.args.get('filterType', default='title')
-    param = request.args.get(filterType)
-    print(param, filterType)
-    recipes = s.searchFunc(request.args.get('query'), filterType, param)
-    return render_template('list.html', recipes=recipes)
+    @app.route('/recipes')
+    def list():
+        filterType = request.args.get('filterType', default='title')
+        param = request.args.get(filterType)
+        recipes = s.searchFunc(request.args.get('query'), filterType, param)
+        return render_template('list.html', recipes=recipes)
 
-@app.route('/recipes/create', methods=['GET', 'POST'])
-def create():
-    if request.method == 'POST':
-        title = request.form.get('recipeName')
-        instructions_list = request.form.getlist('instructionsList')
-        instructions_text = '\n'.join(instructions_list)  # Convert list to string for DB
+    @app.route('/recipes/create', methods=['GET', 'POST'])
+    def create():
+        if request.method == 'POST':
+            title = request.form.get('recipeName')
+            instructions_list = request.form.getlist('instructionsList')
+            instructions_text = '\n'.join(instructions_list)
 
-        cuisine = request.form.get('cuisineType')
-        cook_time = request.form.get('time')
-        difficulty = request.form.get('diff')
+            cuisine = request.form.get('cuisineType')
+            cook_time = request.form.get('time')
+            difficulty = request.form.get('diff')
 
-        # Create and store recipe in database
-        new_recipe = Recipe(
-            title=title,
-            instructions=instructions_text,
-            cuisine=cuisine,
-            cook_time=int(cook_time) if cook_time else None,
-            difficulty=difficulty
-        )
-        db.session.add(new_recipe)
-        db.session.commit()
+            new_recipe = Recipe(
+                title=title,
+                instructions=instructions_text,
+                cuisine=cuisine,
+                cook_time=int(cook_time) if cook_time else None,
+                difficulty=difficulty
+            )
+            db.session.add(new_recipe)
+            db.session.commit()
 
-        # Save full instruction list to JSON
-        save_instructions_to_json(new_recipe.id, instructions_list)
+            save_instructions_to_json(new_recipe.id, instructions_list)
 
-        ingredient_names = request.form.getlist('ingredientNames')
-        amounts = request.form.getlist('amount')
+            ingredient_names = request.form.getlist('ingredientNames')
+            amounts = request.form.getlist('amount')
 
-        seen = set()
-        for name, qty in zip(ingredient_names, amounts):
-            if name and qty:
-                ingredient = Ingredient.query.filter_by(name=name).first()
-                if ingredient and ingredient.id not in seen:
-                    req = Reqs(recipe_id=new_recipe.id, ingredient_id=ingredient.id, qty=int(qty))
-                    db.session.add(req)
-                    seen.add(ingredient.id)
+            seen = set()
+            for name, qty in zip(ingredient_names, amounts):
+                if name and qty:
+                    ingredient = Ingredient.query.filter_by(name=name).first()
+                    if ingredient and ingredient.id not in seen:
+                        req = Reqs(recipe_id=new_recipe.id, ingredient_id=ingredient.id, qty=int(qty))
+                        db.session.add(req)
+                        seen.add(ingredient.id)
 
-        db.session.commit()
-        flash(f"Recipe '{title}' created successfully!")
-        return redirect(url_for('home'))
+            db.session.commit()
+            flash(f"Recipe '{title}' created successfully!")
+            return redirect(url_for('home'))
 
-    if request.method == 'GET':
         ingredientsList = Ingredient.query.order_by(asc(Ingredient.name)).all()
         return render_template('create.html', ingredientsList=ingredientsList)
 
-@app.route('/recipes/<int:id>', methods=['GET', 'POST'])
-def recipe(id):
-    recipe = Recipe.query.get_or_404(id)
-    if request.method == 'POST':
-        author = request.form.get('author')
-        commentPost = request.form.get('commentPost')
-        comment = Comments(author=author, commentPost=commentPost, recipe_id=id)
-        db.session.add(comment)
-        db.session.commit()
+    @app.route('/recipes/<int:id>', methods=['GET', 'POST'])
+    def recipe(id):
+        recipe = db.session.get(Recipe, id)
+        if not recipe:
+            return "Recipe not found", 404
+
+        if request.method == 'POST':
+            author = request.form.get('author')
+            commentPost = request.form.getlist('commentPost')
+            commentPost = '\n'.join(commentPost)
+            comment = Comments(author=author, commentPost=commentPost, recipe_id=id)
+            db.session.add(comment)
+            db.session.commit()
+
         commentList = Comments.query.filter(Comments.recipe_id == id).limit(10)
         return render_template('recipe.html', recipe=recipe, commentList=commentList)
-    if request.method == 'GET':
-        commentList = Comments.query.filter(Comments.recipe_id == id).limit(10)
-        return render_template('recipe.html', recipe=recipe, commentList=commentList)
 
-@app.route('/ingredient', methods=['GET', 'POST'])
-def ingredient():
-    if request.method == 'GET':
+    @app.route('/ingredient', methods=['GET', 'POST'])
+    def ingredient():
+        if request.method == 'POST':
+            name = request.form.get('name')
+            measure = request.form.to_dict()['measures']
+            ingredient = Ingredient(name=name, measure=measure)
+            db.session.add(ingredient)
+            db.session.commit()
         return render_template('ingredient.html')
 
-    if request.method == 'POST':
-        name = request.form.get('name')
-        measure = request.form.to_dict().get('measures')
-        ingredient = Ingredient(name=name, measure=measure)
-        db.session.add(ingredient)
+    @app.route('/recipes/delete/<int:id>', methods=['POST'])
+    def delete_recipe(id):
+        recipe = db.session.get(Recipe, id)
+        if not recipe:
+            return "Recipe not found", 404
+
+        Reqs.query.filter_by(recipe_id=id).delete()
+
+        try:
+            with open('instructions.json', 'r') as f:
+                data = json.load(f)
+            data.pop(str(recipe.id), None)
+            with open('instructions.json', 'w') as f:
+                json.dump(data, f, indent=4)
+        except:
+            pass
+
+        db.session.delete(recipe)
         db.session.commit()
-        return render_template('ingredient.html')
+        flash("Recipe deleted successfully!")
+        return redirect(url_for('home'))
 
-@app.route('/recipes/delete/<int:id>', methods=['POST'])
-def delete_recipe(id):
-    recipe = Recipe.query.get_or_404(id)
+    @app.route('/comments/delete/<int:comment_id>/<int:recipe_id>', methods=['POST'])
+    def delete_comment(comment_id, recipe_id):
+        comment = Comments.query.get_or_404(comment_id)
+        db.session.delete(comment)
+        db.session.commit()
+        flash("Comment deleted.")
+        return redirect(url_for('recipe', id=recipe_id))
 
-    # Delete any ingredient-recipe associations in Reqs
-    Reqs.query.filter_by(recipe_id=id).delete()
+    return app
 
-    # Delete related instructions from JSON 
-    try:
-        import json
-        with open('instructions.json', 'r') as f:
-            data = json.load(f)
-        data.pop(str(recipe.id), None)
-        with open('instructions.json', 'w') as f:
-            json.dump(data, f, indent=4)
-    except:
-        pass  
-
-    # Delete the recipe itself
-    db.session.delete(recipe)
-    db.session.commit()
-    flash("Recipe deleted successfully!") 
-    return redirect(url_for('home'))
-@app.route('/comments/delete/<int:comment_id>/<int:recipe_id>', methods=['POST'])
-def delete_comment(comment_id, recipe_id):
-    comment = Comments.query.get_or_404(comment_id)
-    db.session.delete(comment)
-    db.session.commit()
-    flash("Comment deleted.")
-    return redirect(url_for('recipe', id=recipe_id))
 if __name__ == '__main__':
+    app = create_app()
     app.run(debug=True, port=5555)

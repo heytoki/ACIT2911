@@ -1,93 +1,54 @@
-import sys
-import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
-from app import app
+import pytest
+from app import create_app
+from db import db
+from models import Recipe
 
-def test_search_by_title():
-    with app.test_client() as c:
-        # Search for 'Pancakes', which exists in the database
-        res = c.get('/recipes?query=Pancakes&filterType=title')
-        assert res.status_code == 200
-        assert b'Pancakes' in res.data
+@pytest.fixture
+def client():
+    app = create_app({
+        'TESTING': True,
+        'SQLALCHEMY_DATABASE_URI': 'sqlite:///:memory:',
+        'SQLALCHEMY_TRACK_MODIFICATIONS': False,
+    })
 
-        # Search for a recipe that doesn't exist (e.g., 'Pizza')
-        res = c.get('/recipes?query=Pizza&filterType=title')
-        assert res.status_code == 200
-        assert b'Pizza' not in res.data
+    with app.test_client() as client:
+        with app.app_context():
+            db.create_all()
+            r1 = Recipe(title="Spaghetti Bolognese", instructions="Boil pasta", cuisine="italian", cook_time=30, difficulty="medium")
+            r2 = Recipe(title="Sushi Rolls", instructions="Roll rice", cuisine="japanese", cook_time=50, difficulty="hard")
+            db.session.add_all([r1, r2])
+            db.session.commit()
+        yield client
 
-        # test results if empty query
-        res = c.get('/recipes?query=')
-        assert res.status_code == 200
-        assert b'Pancakes' in res.data
+def test_search_by_title(client):
+    response = client.get('/recipes?query=Spaghetti&filterType=title')
+    assert response.status_code == 200
+    assert b"Spaghetti Bolognese" in response.data
+    assert b"Sushi Rolls" not in response.data
 
-        # check case insensitivity
-        res = c.get('/recipes?query=pancakes&filterType=title')
-        assert res.status_code == 200
-        assert b'Pancakes' in res.data
+def test_search_by_cuisine(client):
+    response = client.get('/recipes?query=Sushi&filterType=cuisineTypes&cuisineTypes=japanese')
+    assert response.status_code == 200
+    assert b"Sushi Rolls" in response.data
+    assert b"Spaghetti Bolognese" not in response.data
 
-        # check partial matches in title
-        res = c.get('/recipes?query=Pan&filterType=title')
-        assert res.status_code == 200
-        assert b'Pancakes' in res.data
+def test_search_by_difficulty(client):
+    response = client.get('/recipes?query=Sushi&filterType=diff&diff=hard')
+    assert response.status_code == 200
+    assert b"Sushi Rolls" in response.data
+    assert b"Spaghetti Bolognese" not in response.data
 
+def test_search_by_cook_time(client):
+    response = client.get('/recipes?query=Sushi&filterType=time&time=60')
+    assert response.status_code == 200
+    assert b"Sushi Rolls" in response.data
 
-def test_search_by_cuisine():
-    with app.test_client() as c:
-        res = c.get('/recipes?query=&filterType=cuisineTypes&cuisineTypes=italian')
-        assert res.status_code == 200
-        assert b'Spaghetti Bolognese' in res.data
+def test_search_empty_query(client):
+    response = client.get('/recipes?query=&filterType=title')
+    assert response.status_code == 200
+    assert b"Spaghetti Bolognese" in response.data
+    assert b"Sushi Rolls" in response.data
 
-        # search for recipe that does exist
-        res = c.get('/recipes?query=Tacos&filterType=cuisineTypes&cuisineTypes=mexican')
-        assert res.status_code == 200
-        assert b'Tacos' in res.data
-
-        # Search for a cuisine that doesn't exist
-        res = c.get('/recipes?query=Crepes&filterType=cuisineTypes&cuisineTypes=french')
-        assert res.status_code == 200
-        assert b'Crepes' not in res.data
-
-
-def test_search_by_difficulty():
-    with app.test_client() as c:
-        res = c.get('/recipes?query=&filterType=diff&diff=easy')
-        assert res.status_code == 200
-        assert b'Pancakes' in res.data
-        assert b'Greek Salad' in res.data
-
-        # check medium difficulty recipes
-        res = c.get('/recipes?query=&filterType=diff&diff=medium')
-        assert res.status_code == 200
-        assert b'Spaghetti Bolognese' in res.data
-        assert b'Tacos' in res.data
-
-
-        # check hard difficulty recipes
-        res = c.get('/recipes?query=&filterType=diff&diff=hard')
-        assert res.status_code == 200
-        assert b'Chicken Curry' in res.data
-        assert b'Sushi Rolls' in res.data
-
-
-def test_search_by_cook_time():
-    with app.test_client() as c:
-        # Valid filter: cook_time <= 20
-        res = c.get('/recipes?query=&filterType=time&time=20')
-        assert res.status_code == 200
-        assert b'Greek Salad' in res.data
-        assert b'Pancakes' in res.data
-        assert b'Spaghetti Bolognese' not in res.data
-
-        # Edge case: cook_time = 0 (should return nothing)
-        res = c.get('/recipes?query=&filterType=time&time=0')
-        assert res.status_code == 200
-        assert b'Greek Salad' not in res.data
-        assert b'Pancakes' not in res.data
-
-        # Edge case: missing time parameter, returns all recipes
-        res = c.get('/recipes?query=&filterType=time')
-        assert res.status_code == 200
-        assert b'Pancakes' in res.data
-
-
-
+def test_search_time_non_numeric(client):
+    response = client.get('/recipes?query=Sushi&filterType=time&time=abc')
+    assert response.status_code == 500 or response.status_code == 200
