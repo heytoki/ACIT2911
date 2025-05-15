@@ -5,6 +5,7 @@ from models import Recipe, Ingredient, Reqs, Comments
 from sqlalchemy import asc
 from utils import save_instructions_to_json
 import searchRecipe as s
+import json
 
 def create_app(config=None):
     app = Flask(__name__)
@@ -71,9 +72,8 @@ def create_app(config=None):
             flash(f"Recipe '{title}' created successfully!")
             return redirect(url_for('home'))
 
-        if request.method == 'GET':
-            ingredientsList = Ingredient.query.order_by(asc(Ingredient.name)).all()
-            return render_template('create.html', ingredientsList=ingredientsList)
+        ingredientsList = Ingredient.query.order_by(asc(Ingredient.name)).all()
+        return render_template('create.html', ingredientsList=ingredientsList)
 
     @app.route('/recipes/<int:id>', methods=['GET', 'POST'])
     def recipe(id):
@@ -88,25 +88,19 @@ def create_app(config=None):
             comment = Comments(author=author, commentPost=commentPost, recipe_id=id)
             db.session.add(comment)
             db.session.commit()
-            commentList = Comments.query.filter(Comments.recipe_id == id).limit(10)
-            return render_template('recipe.html', recipe=recipe, commentList=commentList)
 
-        if request.method == 'GET':
-            commentList = Comments.query.filter(Comments.recipe_id == id).limit(10)
-            return render_template('recipe.html', recipe=recipe, commentList=commentList)
+        commentList = Comments.query.filter(Comments.recipe_id == id).limit(10)
+        return render_template('recipe.html', recipe=recipe, commentList=commentList)
 
     @app.route('/ingredient', methods=['GET', 'POST'])
     def ingredient():
-        if request.method == 'GET':
-            return render_template('ingredient.html')
-
         if request.method == 'POST':
             name = request.form.get('name')
             measure = request.form.to_dict()['measures']
             ingredient = Ingredient(name=name, measure=measure)
             db.session.add(ingredient)
             db.session.commit()
-            return render_template('ingredient.html')
+        return render_template('ingredient.html')
 
     @app.route('/recipes/delete/<int:id>', methods=['POST'])
     def delete_recipe(id):
@@ -117,7 +111,6 @@ def create_app(config=None):
         Reqs.query.filter_by(recipe_id=id).delete()
 
         try:
-            import json
             with open('instructions.json', 'r') as f:
                 data = json.load(f)
             data.pop(str(recipe.id), None)
@@ -126,18 +119,21 @@ def create_app(config=None):
         except:
             pass
 
-    # Delete the recipe itself
-    db.session.delete(recipe)
-    db.session.commit()
-    flash("Recipe deleted successfully!") 
-    return redirect(url_for('home'))
-@app.route('/comments/delete/<int:comment_id>/<int:recipe_id>', methods=['POST'])
-def delete_comment(comment_id, recipe_id):
-    comment = Comments.query.get_or_404(comment_id)
-    db.session.delete(comment)
-    db.session.commit()
-    flash("Comment deleted.")
-    return redirect(url_for('recipe', id=recipe_id))
+        db.session.delete(recipe)
+        db.session.commit()
+        flash("Recipe deleted successfully!")
+        return redirect(url_for('home'))
+
+    @app.route('/comments/delete/<int:comment_id>/<int:recipe_id>', methods=['POST'])
+    def delete_comment(comment_id, recipe_id):
+        comment = Comments.query.get_or_404(comment_id)
+        db.session.delete(comment)
+        db.session.commit()
+        flash("Comment deleted.")
+        return redirect(url_for('recipe', id=recipe_id))
+
+    return app
+
 if __name__ == '__main__':
     app = create_app()
     app.run(debug=True, port=5555)
