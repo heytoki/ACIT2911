@@ -505,3 +505,109 @@ textarea, textarea:focus {
     background-color: darkred;
 }
 
+:root {
+    --primary-bg: #e6ecf2;
+    --header-bg: #2c3e50;
+    --accent-bg: #3a7ca5;
+    --button-bg: #3a7ca5;
+    --button-hover: #2c3e50;
+    --card-bg: #f0f4f8;
+    --text-color: #1f2d3d;
+    --flash-bg: #5dade2;
+}
+
+body {
+    margin: 0;
+    padding-top: 160px;
+    background-color: var(--primary-bg);
+    font-family: Arial, sans-serif;
+    color: var(--text-color);
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--header-bg);
+    color: white;
+    z-index: 1000;
+    padding-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+    background-color: var(--header-bg);
+    gap: 20px;
+}
+
+.title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: white;
+    margin-left: 15px;
+}
+
+.search-form button,
+.grid button,
+#createPage button {
+    padding: 8px 16px;
+    background-color: var(--button-bg);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.search-form button:hover,
+.grid button:hover,
+#createPage button:hover {
+    background-color: var(--button-hover);
+    color: white;
+}
+
+.recipe-card {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+.recipe-card a,
+.recipe-card > a, .recipe-card > a:visited {
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
+}
+
+.recipe-card a:hover {
+    background-color: var(--accent-bg);
+    color: white;
+}
+
+.grid > div,
+.commentCard {
+    background-color: white;
+    color: var(--text-color);
+}
+
+.commentAuthor,
+.section-title {
+    color: var(--header-bg);
+}
+
+.flashes li {
+    background-color: var(--flash-bg);
+    color: white;
+}
+
+.go-back-btn {
+    background-color: var(--button-bg);
+}
+
+.go-back-btn:hover {
+    background-color: var(--button-hover);
+}
