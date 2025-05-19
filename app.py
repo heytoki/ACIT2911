@@ -96,11 +96,16 @@ def create_app(config=None):
     def ingredient():
         if request.method == 'POST':
             name = request.form.get('name')
-            measure = request.form.to_dict()['measures']
-            ingredient = Ingredient(name=name, measure=measure)
-            db.session.add(ingredient)
-            db.session.commit()
+            measure = request.form.to_dict().get('measures')
+            if name and measure:
+                ingredient = Ingredient(name=name, measure=measure)
+                db.session.add(ingredient)
+                db.session.commit()
+                flash(f"Ingredient '{name}' added successfully!")
+            return redirect(url_for('ingredient'))
+
         return render_template('ingredient.html')
+
 
     @app.route('/recipes/delete/<int:id>', methods=['POST'])
     def delete_recipe(id):
