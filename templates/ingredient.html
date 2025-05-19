@@ -14,9 +14,10 @@
             <img class="logo" src="/static/chef.jpg" alt="Logo">
             <div class="title">CreateYourRecipe.com</div>
         </div>
+
         <nav class="navbar">
             Add an unlisted ingredient:
-           <form class="search-form" method="POST" action="{{ url_for('ingredient') }}">
+            <form class="search-form" method="POST" action="{{ url_for('ingredient') }}">
                 <input type="text" name="name" placeholder="Ingredient Name" required>
                 <select name="measures" required>
                     <option value="weight">Weight</option>
@@ -30,15 +31,18 @@
             </form>
         </nav>
     </header>
-            {% with messages = get_flashed_messages() %}
+    <a href="{{ url_for('home') }}" class="go-back-btn">Go Back</a>
+
+    {% with messages = get_flashed_messages() %}
         {% if messages %}
-        <ul class="flashes">
-            {% for message in messages %}
-            <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
+            <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
         {% endif %}
-        {% endwith %}
-        <a href="{{ url_for('home') }}" class="go-back-btn">Go Back</a>
+    {% endwith %}
+
 </body>
+
 </html>
