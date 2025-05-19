@@ -38,7 +38,7 @@ def test_create_recipe_post(client):
 
 def test_create_ingredient_post(client):
     form_data = {'name': 'Sugar', 'measures': 'cup'}
-    response = client.post('/ingredient', data=form_data)
+    response = client.post('/ingredient', data=form_data, follow_redirects=True)
     assert response.status_code == 200
 
 def test_add_comment_post(client):
